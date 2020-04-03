@@ -14,6 +14,14 @@ namespace SpaceTaxi.LevelLoading {
             string[] lines = File.ReadAllLines(Utils.GetLevelFilePath(filename));
 
             // Iterate over lines and add data till the corresponding field
+            foreach (String str in lines) {
+                switch (str) {
+                    case "":
+                        break;
+                    case "":
+                        break;
+                }
+            }
         }
     }
 }
