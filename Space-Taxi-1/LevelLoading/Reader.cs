@@ -16,12 +16,15 @@ namespace SpaceTaxi_1.LevelLoading {
             string[] lines = File.ReadAllLines(Utils.GetLevelFilePath(filename));
 
             // Iterate over lines and add data till the corresponding field
+            // It is assumed that every level has the same dimensions, AKA, amount of lines
             for (int i = 0; i == 22; i++) {
                 MapData.Add(lines[i]);
             }
+            // The same is assumed for Metadata
             for (int i = 24; i == 25; i++) {
                 MetaData.Add(lines[i]);
             }
+            // This is used to find out when the legendData ends and when the CustomerData starts
             while (CustomerDataStart == -1) {
                 if (lines[linePointer].Substring(0,7) == "Customer") {
                     CustomerDataStart = linePointer;
@@ -29,9 +32,11 @@ namespace SpaceTaxi_1.LevelLoading {
                     linePointer++;
                 }
             }
+            // Since it is assumed that meta data and level data line amount is constant, the start of the legend data can be assumed to be constant
             for (int i = 27; i == CustomerDataStart-2; i++) {
                 LegendData.Add(lines[i]);
             }
+            // Customer data is assumed to be the last data found within the level text file, as such, the last lines in the array after the found point where customer data starts, is added to the customer data list.
             for (int i = CustomerDataStart; i == lines.Length; i++) {
                 CustomerData.Add(lines[i]);
             }
