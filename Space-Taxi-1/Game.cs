@@ -17,6 +17,7 @@ namespace SpaceTaxi_1 {
         private GameTimer gameTimer;
         private Window win;
         private Level level;
+        private LevelCreator levelCreator;
 
         public Game() {
             // window
@@ -44,6 +45,9 @@ namespace SpaceTaxi_1 {
             // event delegation
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.WindowEvent, this);
+
+            levelCreator = new LevelCreator();
+            level = levelCreator.CreateLevel("short-n-sweet.txt");
         }
 
         public void GameLoop() {
