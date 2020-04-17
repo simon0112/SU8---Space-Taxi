@@ -8,6 +8,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Timers;
 using SpaceTaxi_1.Utilities;
+using SpaceTaxi_1.LevelLoading;
 
 namespace SpaceTaxi_1 {
     public class Game : IGameEventProcessor<object> {
@@ -15,6 +16,7 @@ namespace SpaceTaxi_1 {
         private GameEventBus<object> eventBus;
         private GameTimer gameTimer;
         private Window win;
+        private Level level;
 
         public Game() {
             // window
@@ -56,6 +58,7 @@ namespace SpaceTaxi_1 {
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     backGroundImage.RenderEntity();
+                    level.RenderLevelObjects();
 
                     win.SwapBuffers();
                 }

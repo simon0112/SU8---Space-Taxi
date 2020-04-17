@@ -35,12 +35,13 @@ namespace SpaceTaxi_1.LevelLoading {
             // This is used to find out when the legendData ends and when the CustomerData starts
             while (CustomerDataStart == -1) {
                 if (lines[linePointer].Length > 7) {
-                    Console.WriteLine(lines[linePointer].Substring(0, 8));
                     if (lines[linePointer].Substring(0, 8) == "Customer") {
                         CustomerDataStart = linePointer;
                     } else { 
                         linePointer++;
                     }
+                } else {
+                    linePointer++;
                 }
             }
             // Since it is assumed that meta data and level data line amount is constant, the start of the legend data can be assumed to be constant
@@ -48,7 +49,7 @@ namespace SpaceTaxi_1.LevelLoading {
                 this.LegendData.Add(lines[i]);
             }
             // Customer data is assumed to be the last data found within the level text file, as such, the last lines in the array after the found point where customer data starts, is added to the customer data list.
-            for (int i = CustomerDataStart; i <= lines.Length; i++) {
+            for (int i = CustomerDataStart; i < lines.Length; i++) {
                 this.CustomerData.Add(lines[i]);
             }
         }

@@ -1,5 +1,6 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
+using System.IO;
 
 namespace SpaceTaxi_1.LevelLoading {
     public class Level {
@@ -17,11 +18,11 @@ namespace SpaceTaxi_1.LevelLoading {
 
         public void RenderLevelObjects() {
             // all rendering here
-            // obstacles.RenderEntities()
+            obstacles.RenderEntities();
         }
 
-        public void AddObstacle(StationaryShape obs, string img) {
-            obstacles.AddStationaryEntity(obs, );
+        public void AddObstacle(StationaryShape obs, Image img) {
+            obstacles.AddStationaryEntity(obs, img);
         }
     }
 }
