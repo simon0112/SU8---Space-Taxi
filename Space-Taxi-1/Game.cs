@@ -47,7 +47,7 @@ namespace SpaceTaxi_1 {
             eventBus.Subscribe(GameEventType.WindowEvent, this);
 
             levelCreator = new LevelCreator();
-            level = levelCreator.CreateLevel("short-n-sweet.txt");
+            level = levelCreator.CreateLevel("the-beach.txt");
         }
 
         public void GameLoop() {
