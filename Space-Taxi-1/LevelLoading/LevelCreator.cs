@@ -30,7 +30,7 @@ namespace SpaceTaxi_1.LevelLoading {
             for (float y = 0; y < reader.MapData.Count; y++) {
                 for (float x = 0; x < reader.MapData[(int) y].Length; x++) {
                      if (reader.MapData[(int) y].Substring((int) x, 1) == ">") {
-                        level.AddPlayer((new DIKUArcade.Entities.DynamicShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))),(new DIKUArcade.Graphics.Image(Path.Combine("Assets","Images","Taxi_Thrust_None.png"))));
+                        level.AddPlayer(new DIKUArcade.Entities.DynamicShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count)));
                     } else if (reader.MapData[(int) y].Substring((int) x, 1) != " " && reader.MapData[(int) y].Substring((int) x, 1) != "^") {
                         var ImageIndex = LegendIndexFinder.IndexOf(reader.MapData[(int) y].Substring((int) x, 1));
                         var ImageName = reader.LegendData[ImageIndex].Substring(3);
