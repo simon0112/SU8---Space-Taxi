@@ -23,6 +23,10 @@ namespace SpaceTaxi_1 {
             // window
             win = new Window("Space Taxi Game v0.1", 500, AspectRatio.R1X1);
 
+            // level
+            levelCreator = new LevelCreator();
+            level = levelCreator.CreateLevel("the-beach.txt");
+
             // event bus
             eventBus = EventBus.GetBus();
             eventBus.InitializeEventBus(new List<GameEventType> {
@@ -45,9 +49,9 @@ namespace SpaceTaxi_1 {
             // event delegation
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.WindowEvent, this);
+            eventBus.Subscribe(GameEventType.PlayerEvent, this);
 
-            levelCreator = new LevelCreator();
-            level = levelCreator.CreateLevel("the-beach.txt");
+            eventBus.Subscribe(GameEventType.PlayerEvent, level.ReturnPlayer());
         }
 
         public void GameLoop() {
@@ -56,6 +60,7 @@ namespace SpaceTaxi_1 {
 
                 while (gameTimer.ShouldUpdate()) {
                     win.PollEvents();
+                    level.ReturnPlayer().Move();
                     eventBus.ProcessEvents();
                 }
 

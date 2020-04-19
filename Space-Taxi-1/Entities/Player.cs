@@ -3,6 +3,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.IO;
+using System;
 using SpaceTaxi_1.Enums;
 
 namespace SpaceTaxi_1.Entities {
@@ -12,33 +13,15 @@ namespace SpaceTaxi_1.Entities {
         public Player(DynamicShape shape) {
             Entity = new Entity(shape, new DIKUArcade.Graphics.Image(Path.Combine("Assets","Images","Taxi_Thrust_None.png")));
             orientation = new Orientation();
+            Entity.Shape.AsDynamicShape().Direction = (new Vec2F(0,(float) 0.0001));
         }
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.PlayerEvent) {
-                switch (gameEvent.Parameter1) {
-                    case "KEY_PRESS":
-                        switch (gameEvent.Message) {
-                            case "KEY_LEFT":
-                                this.Direction(new Vec2F(-0.0060f, 0.0000f));
-                                this.orientation = Orientation.Left;
-                                break;
-                            case "KEY_RIGHT":
-                                this.Direction(new Vec2F(0.0060f, 0.0000f));
-                                this.orientation = Orientation.Right;
-                                break;
-                        }
+                switch (gameEvent.Message) {
+                    case "BOOSTER_TO_LEFT":
+                        Console.WriteLine("TEST");
                         break;
-                    case "KEY_RELEASE":
-                        switch (gameEvent.Message) {
-                            case "KEY_LEFT":
-                                this.Direction(new Vec2F(0f, 0f));
-                                break;
-                            case "KEY_RIGHT":
-                                this.Direction(new Vec2F(0f, 0f));
-                                break;
-                        }
-                        break;
-                }     
+                }
             }    
         }
         
