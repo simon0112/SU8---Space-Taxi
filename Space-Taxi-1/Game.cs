@@ -94,6 +94,11 @@ namespace SpaceTaxi_1 {
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
                         GameEventType.PlayerEvent, this, "BOOSTER_UPWARDS", "", ""));
                 break;
+            case "KEY_DOWN":
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "BOOSTER_DOWNWARDS", "", ""));
+                break;
             case "KEY_LEFT":
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
@@ -123,6 +128,11 @@ namespace SpaceTaxi_1 {
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
                         GameEventType.PlayerEvent, this, "STOP_ACCELERATE_UP", "", ""));
+                break;
+            case "KEY_DOWN":
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "STOP_ACCELERATE_DOWN", "", ""));
                 break;
             }
         }
