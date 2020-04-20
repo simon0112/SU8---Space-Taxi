@@ -19,13 +19,13 @@ namespace SpaceTaxi_1 {
         private Level level;
         private LevelCreator levelCreator;
 
-        public Game() {
+        public Game(string LvlName) {
             // window
             win = new Window("Space Taxi Game v0.1", 500, AspectRatio.R1X1);
 
             // level
             levelCreator = new LevelCreator();
-            level = levelCreator.CreateLevel("the-beach.txt");
+            level = levelCreator.CreateLevel(LvlName);
 
             // event bus
             eventBus = EventBus.GetBus();
