@@ -27,36 +27,50 @@ namespace SpaceTaxi_1.Entities {
             }
         }
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
-            Orientation value;
+            Orientation value = Orientation.Left;
             if (eventType == GameEventType.PlayerEvent) {
                         switch(gameEvent.Message){
                             case "BOOSTER_TO_LEFT":
                                 value = Orientation.Left;
                                 playerIsLeftOrRight(value);
                                 this.Direction(new Vec2F(-0.0040f, 0.0000f));
+                                this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Back.png"));
                                 break;
                             case "BOOSTER_TO_RIGHT":
                                 value = Orientation.Right;
                                 playerIsLeftOrRight(value);
                                 this.Direction(new Vec2F(0.0040f, 0.0000f));
+                                this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Back_Right.png"));
                                 break;
                             case "BOOSTER_UPWARDS":
                                 this.Direction(new Vec2F(0.0000f, 0.0040f));
+                                switch (value) {
+                                    case Orientation.Left:
+                                        this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom.png"));
+                                        break;
+                                    case Orientation.Right:
+                                        this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Right.png"));
+                                        break;
+                                }
                                 break;
                             case "BOOSTER_DOWNWARDS":
                                 this.Direction(new Vec2F(0.0000f, -0.0040f));
                                 break;
                             case "STOP_ACCELERATE_LEFT":
                                 this.Direction(new Vec2F(0f, 0f));
+                                playerIsLeftOrRight(value);
                                 break;
                             case "STOP_ACCELERATE_RIGHT":
                                 this.Direction(new Vec2F(0f, 0f));
+                                playerIsLeftOrRight(value);
                                 break;
                             case "STOP_ACCELERATE_UP":
                                 this.Direction(new Vec2F(0f, 0f));
+                                playerIsLeftOrRight(value);
                                 break;
                             case "STOP_ACCELERATE_DOWN":
                                 this.Direction(new Vec2F(0f, 0f));
+                                playerIsLeftOrRight(value);
                                 break;
                    
                 }     
