@@ -7,21 +7,21 @@ using DIKUArcade.Math;
 
 namespace UnitTests
 {
+    [TestFixture]
     public class Tests
     {
-        Orientation hey;
-        Orientation orientation;
+      //  Orientation hey;
+    //    Orientation orientation;
         [SetUp]
         public void Setup()
         {
-            
+            Player player = new Player(new DIKUArcade.Entities.DynamicShape(0f,0f,0f,0f));
         }
 
         [Test]
         public void TestOfPlayerIsLeftOrRight()
         {
-            var player = new Player(new DIKUArcade.Entities.DynamicShape(0f,0f,0f,0f));
-            player.playerIsLeftOrRight(hey);
+         //   player.playerIsLeftOrRight(hey);
             System.Console.WriteLine("hi");
             Assert.AreEqual(1,1);
         }
