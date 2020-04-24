@@ -22,7 +22,6 @@ namespace UnitTests
         Level level;
         LevelCreator levelcreator;
 
-        public Player player;
         [SetUp]
         public void Setup()
         {
@@ -30,7 +29,6 @@ namespace UnitTests
             player = new Player(new DIKUArcade.Entities.DynamicShape(new Vec2F(0.5f,0.5f),new Vec2F(0.1f,0.1f)));
             levelcreator = new LevelCreator();
             level = levelcreator.CreateLevel("short-n-sweet.txt");
-            var player = new Player(new DIKUArcade.Entities.DynamicShape(new Vec2F(0.5f,0.5f),new Vec2F(0.1f,0.1f)));
             
             
         }
@@ -39,7 +37,8 @@ namespace UnitTests
         [Test]
         public void TestOfPlayerPlacement() {
             var test = level.Player.Entity.Shape.Position;
-            Assert.AreEqual(test, new Vec2F(((float)32/(float)levelcreator.reader.MapData[19].Length),(-1*((float)19/-(float) levelcreator.reader.MapData.Count))));
+            Assert.AreEqual(test.X, ((float)32/(float)levelcreator.reader.MapData[19].Length), 0.1);
+            Assert.AreEqual(test.Y, (-1*((float)19/-(float) levelcreator.reader.MapData.Count)), 0.1);
         }
 
         //Player tests
