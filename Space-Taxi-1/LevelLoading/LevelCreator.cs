@@ -7,15 +7,19 @@ namespace SpaceTaxi_1.LevelLoading {
         private List<string> LegendIndexFinder;
         private Reader reader;
 
-        // constructor of the levelcreator.
+        ///<summary> the instantiator of the LevelCreator object</summary>
+        ///<variable name="reader"> the reader that reads the files that save how the levels look</variable>
+        ///<variable name="LegendIndexFinder"> A list used to determine which character in the map data has what index in the legend data</variable>
+        ///<returns> </returns>
         public LevelCreator() {
             reader = new Reader();
             LegendIndexFinder = new List<string>();
         }
         
-        //<summary> creates an instance of the Level class <summary/>
-        //<input> string levelname</insput>
-        //<return> Level </insput> 
+        ///<summary> Creates and instantiates the level object, also adds obstacles and the player to the level<summary/>
+        ///<variable name="levelname"> levelname is the name of the level that is to be created, used to find the right file</variable>
+        ///<variable name="level"> the level itself</variable>
+        ///<returns> The level that has been filled with obstacles and the player</returns> 
         public Level CreateLevel(string levelname) {
             // Create the Level here.
             Level level = new Level();

@@ -9,9 +9,8 @@ namespace SpaceTaxi_1.Utilities {
         /// </summary>
         /// <returns>Event bus.</returns>
 
-        //<summary> returns a new  GameEventBus<object>() instance <summary/>
-        //<input> none </insput>
-        //<return> GameEventBus<object> object </insput> 
+        ///<summary> returns a new  GameEventBus<object>() instance <summary/>
+        ///<return> GameEventBus<object> object </returns> 
         public static GameEventBus<object> GetBus() {
             return EventBus.eventBus ?? (EventBus.eventBus = new GameEventBus<object>());
         }

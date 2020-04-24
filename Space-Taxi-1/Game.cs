@@ -20,9 +20,15 @@ namespace SpaceTaxi_1 {
         private LevelCreator levelCreator;
 
 
-        //<summary> the game class constructor. <summary/>
-        //<input> string LvlName </insput>
-        //<return>  </insput>
+        ///<summary> the game class constructor. <summary/>
+        ///<variable name="LvlName"> the name of the level that is to be loaded.</variable>
+        ///<variable name="win"> The window that the game will be displayed in.</variable>
+        ///<variable name="eventBus"> The eventBus that will load every event in an orderly manner.</variable>
+        ///<variable name="gameTimer"> The game timer, used to update various information in the window every interval of time.</variable>
+        ///<variable name="BackgroundImage"> The background image of the game itself</variable>
+        ///<variable name="LevelCreator"> The object that creates the level</variable>
+        ///<variable name="Level"> The level itself</variable>
+        ///<returns> Void, only instantiates the game class </returns>
         public Game(string LvlName) {
             // window
             win = new Window("Space Taxi Game v0.1", 500, AspectRatio.R1X1);
@@ -57,7 +63,8 @@ namespace SpaceTaxi_1 {
 
             eventBus.Subscribe(GameEventType.PlayerEvent, level.ReturnPlayer());
         }
-        // gameloop, runs the project
+        ///<summary>The main Game loop, used to render, and process events in an orderly fashion</summary>
+        ///<returns> void </returns>
         public void GameLoop() {
             while (win.IsRunning()) {
                 gameTimer.MeasureTime();
@@ -84,9 +91,9 @@ namespace SpaceTaxi_1 {
             }
         }
         
-        //<summary> register the events if one of the casses is called. <summary/>
-        //<input> string key </insput>
-        //<return> void </insput> 
+        ///<summary> register the events if one of the casses is called. <summary/>
+        ///<variable name="key"> The key that is pressed</variable>
+        ///<returns> void, but pushes an event to the eventBus such that every other instance can process it</returns> 
         public void KeyPress(string key) {
             switch (key) {
             case "KEY_ESCAPE":
@@ -118,9 +125,9 @@ namespace SpaceTaxi_1 {
                 break;
             }
         }
-        //<summary> register the events if one of the keys is released. <summary/>
-        //<input> string key </insput>
-        //<return> void </insput> 
+        ///<summary> register the events if one of the keys is released. <summary/>
+        ///<variable name="key"> the key that is released </variable>
+        ///<return> void, but like KeyPress, pushes an event to the eventBus </insput> 
         public void KeyRelease(string key) {
             switch (key) {
             case "KEY_LEFT":
@@ -145,9 +152,10 @@ namespace SpaceTaxi_1 {
                 break;
             }
         }
-        //<summary> register the events if close window, key pressed or key release is pressed. <summary/>
-        //<input> GameEventType eventType og GameEvent<object> gameEvent) </insput>
-        //<return> void </insput> 
+        ///<summary> The first processEvent, it takes the regular keypresses given by the eventBus and uses helper methods to send the event onwards <summary/>
+        ///<variable name="eventType"> The event type that is related to the specific game event in the eventBus</variable>
+        ///<variable name="gameEvent"> The game event itself </variable>
+        ///<return> void, but runs functions depending on what the event consists of </returns> 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
                 switch (gameEvent.Message) {
