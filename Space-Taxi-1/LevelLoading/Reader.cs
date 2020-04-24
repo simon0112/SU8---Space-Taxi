@@ -27,7 +27,7 @@ namespace SpaceTaxi_1.LevelLoading {
             string[] lines = File.ReadAllLines(Utils.GetLevelFilePath(filename));
         
             // Iterate over lines and add data till the corresponding field
-            // It is assumed that every level has the same dimensions, AKA, amount of lines
+            // It is assumed that every level has the same dimensions, AKA, amount of lines.
             for (int i = 0; i <= 22; i++) {
                 this.MapData.Add(lines[i]);
             }

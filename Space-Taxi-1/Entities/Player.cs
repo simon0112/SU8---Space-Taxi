@@ -11,7 +11,7 @@ namespace SpaceTaxi_1.Entities {
         public Orientation orientation {get; private set;}
         public Entity Entity {get; private set;}
 
-        // Player class constructor.
+        // Player class constructor
         // it creates a player with a shape given in four vectors as its position
         // and an image.
         public Player(DynamicShape shape) {

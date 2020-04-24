@@ -20,7 +20,7 @@ namespace SpaceTaxi_1 {
         private LevelCreator levelCreator;
 
 
-        // the game class constructor
+        // the game class constructor.
         public Game(string LvlName) {
             // window
             win = new Window("Space Taxi Game v0.1", 500, AspectRatio.R1X1);
