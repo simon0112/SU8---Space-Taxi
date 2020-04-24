@@ -4,11 +4,12 @@ using DIKUArcade;
 using SpaceTaxi_1.Entities;
 using SpaceTaxi_1.Enums;
 using DIKUArcade.Math;
-using System.IO;
-using System.Reflection;
 using DIKUArcade.EventBus;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
+using System.IO;
+using System;
+
 
 
 namespace UnitTests
@@ -16,29 +17,28 @@ namespace UnitTests
     [TestFixture]
     public class Tests
     {
-    //  Orientation hey;
-    // Orientation orientation;
+        public Player player;
         [SetUp]
         public void Setup()
         {
-            Player player = new Player(new DIKUArcade.Entities.DynamicShape(0f,0f,0f,0f));
+            DIKUArcade.Window.CreateOpenGLContext();
+            var player = new Player(new DIKUArcade.Entities.DynamicShape(new Vec2F(0.5f,0.5f),new Vec2F(0.1f,0.1f)));
+            
+            
         }
 
         [Test]
-        public void TestOfPlayerIsLeftOrRight()
+        public void TestOfPlayerIsLeft()
         {
-            //
-            GameEventType eventType = new GameEventType();
-            GameEvent<object> gameEvent = new GameEvent<object>();
-            gameEvent.Message = "BOOSTER_TO_LEFT";
-            var player = new Player(new DynamicShape(10.0f,10.0f,10.0f,10.0f));
-            player.ProcessEvent(eventType, gameEvent);
+            player.playerIsLeftOrRight(Orientation.Left);
+            Assert.AreEqual(Orientation.Left, player.orientation);
+        }
 
-            string path = Directory.GetCurrentDirectory();
-            System.Console.WriteLine(path);
-
-            System.Console.WriteLine("hi");
-            Assert.AreEqual(1,1);
+        [Test]
+        public void TestOfPlayerIsRight()
+        {
+            player.playerIsLeftOrRight(Orientation.Right);
+            Assert.AreEqual(Orientation.Right, player.orientation);
         }
     }
 }

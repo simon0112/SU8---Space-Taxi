@@ -16,8 +16,6 @@ namespace SpaceTaxi_1.Entities {
         //<return>  </insput> 
         public Player(DynamicShape shape) {
 
-            // string str = (Path.GetFullPath("Assets/Images/Taxi_Thrust_None.png"));
-            // str = str.Replace("UnitTests/UnitTests/bin/Debug/netcoreapp3.1", "Space-Taxi-1");
             Entity = new Entity(shape, new DIKUArcade.Graphics.Image(Path.Combine("Assets","Images","Taxi_Thrust_None_Right.png")));
             orientation = new Orientation();
             // Entity.Shape.AsDynamicShape().Direction = (new Vec2F(0,(float) 0.0011));
@@ -30,15 +28,14 @@ namespace SpaceTaxi_1.Entities {
         {
             if (value == Orientation.Left)
             {
-
-                // string str = (Path.GetFullPath("Assets/Images/Taxi_Thrust_None.png")); 
-                // str = str.Replace("UnitTests/UnitTests/bin/Debug/netcoreapp3.1", "Space-Taxi-1");
-                this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets","Images","Taxi_Thrust_None_Right.png"));
+                this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets","Images","Taxi_Thrust_None.png"));
+                this.orientation = Orientation.Left;
                 
             }
             else if (value == Orientation.Right)
             {
                 this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets","Images","Taxi_Thrust_None_Right.png"));
+                this.orientation = Orientation.Right;
             }
         }
         
