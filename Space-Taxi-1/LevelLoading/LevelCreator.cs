@@ -5,7 +5,7 @@ namespace SpaceTaxi_1.LevelLoading {
     public class LevelCreator {
         // add fields as you see fit
         private List<string> LegendIndexFinder;
-        private Reader reader;
+        public Reader reader {private set; get;}
 
         ///<summary> the instantiator of the LevelCreator object</summary>
         ///<variable name="reader"> the reader that reads the files that save how the levels look</variable>

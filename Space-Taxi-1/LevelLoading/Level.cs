@@ -6,8 +6,8 @@ using SpaceTaxi_1.Entities;
 namespace SpaceTaxi_1.LevelLoading {
     public class Level {
         // Add fields as needed
-        private EntityContainer obstacles;
-        private Player Player;
+        public EntityContainer obstacles {private set; get;}
+        public Player Player {private set; get;}
 
         // constructor of level class.
         public Level() {
