@@ -35,7 +35,7 @@ namespace SpaceTaxi_1.LevelLoading {
             for (int i = 24; i <= 25; i++) {
                 this.MetaData.Add(lines[i]);
             }
-            // This is used to find out when the legendData ends and when the CustomerData starts
+            // This is used to find out when the legendData ends and when the CustomerData starts.
             while (CustomerDataStart == -1) {
                 if (lines[linePointer].Length > 7) {
                     if (lines[linePointer].Substring(0, 8) == "Customer") {

@@ -12,7 +12,7 @@ namespace SpaceTaxi_1.Entities {
         public Entity Entity {get; private set;}
 
         // Player class constructor
-        // it creates a player with a shape given in four vectors as its position
+        // it creates a player with a shape given in four vectors as its position.
         // and an image.
         public Player(DynamicShape shape) {
 

@@ -6,7 +6,7 @@ namespace SpaceTaxi_1.Utilities {
     public class Utils {
         // makes sure that the path can be found on the computer.
        public static string GetLevelFilePath(string filename) {
-            // Find base path.
+            // Find base path
            DirectoryInfo dir = new DirectoryInfo(Path.GetDirectoryName(
                         Assembly.GetExecutingAssembly().Location));
 

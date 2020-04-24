@@ -25,11 +25,11 @@ namespace SpaceTaxi_1 {
             // window
             win = new Window("Space Taxi Game v0.1", 500, AspectRatio.R1X1);
 
-            // level
+            // level.
             levelCreator = new LevelCreator();
             level = levelCreator.CreateLevel(LvlName);
 
-            // event bus
+            // event bus.
             eventBus = EventBus.GetBus();
             eventBus.InitializeEventBus(new List<GameEventType> {
                 GameEventType.InputEvent, // key press / key release

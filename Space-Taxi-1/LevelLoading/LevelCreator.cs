@@ -14,7 +14,7 @@ namespace SpaceTaxi_1.LevelLoading {
         }
         
         public Level CreateLevel(string levelname) {
-            // Create the Level here
+            // Create the Level here.
             Level level = new Level();
 
             // Gather all the information/objects the levels needs here.
