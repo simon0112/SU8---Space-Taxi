@@ -5,8 +5,13 @@ using System.Reflection;
 namespace SpaceTaxi_1.Utilities {
     public class Utils {
         // makes sure that the path can be found on the computer.
+
+        //<summary> finds base path. And makes sure the the path is 
+        //accesseble on the computer <summary/>
+        //<input> type = string, name = filename </insput>
+        //<return> static string </insput> 
        public static string GetLevelFilePath(string filename) {
-            // Find base path
+            
            DirectoryInfo dir = new DirectoryInfo(Path.GetDirectoryName(
                         Assembly.GetExecutingAssembly().Location));
 

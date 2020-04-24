@@ -20,7 +20,9 @@ namespace SpaceTaxi_1 {
         private LevelCreator levelCreator;
 
 
-        // the game class constructor.
+        //<summary> the game class constructor. <summary/>
+        //<input> string LvlName </insput>
+        //<return>  </insput>
         public Game(string LvlName) {
             // window
             win = new Window("Space Taxi Game v0.1", 500, AspectRatio.R1X1);
@@ -81,7 +83,10 @@ namespace SpaceTaxi_1 {
                 }
             }
         }
-        // register the events if one of the casses is called. 
+        
+        //<summary> register the events if one of the casses is called. <summary/>
+        //<input> string key </insput>
+        //<return> void </insput> 
         public void KeyPress(string key) {
             switch (key) {
             case "KEY_ESCAPE":
@@ -113,7 +118,9 @@ namespace SpaceTaxi_1 {
                 break;
             }
         }
-
+        //<summary> register the events if one of the keys is released. <summary/>
+        //<input> string key </insput>
+        //<return> void </insput> 
         public void KeyRelease(string key) {
             switch (key) {
             case "KEY_LEFT":
@@ -138,7 +145,9 @@ namespace SpaceTaxi_1 {
                 break;
             }
         }
-
+        //<summary> register the events if close window, key pressed or key release is pressed. <summary/>
+        //<input> GameEventType eventType og GameEvent<object> gameEvent) </insput>
+        //<return> void </insput> 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
                 switch (gameEvent.Message) {
