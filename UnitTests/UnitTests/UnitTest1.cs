@@ -13,13 +13,15 @@ using DIKUArcade.Graphics;
 
 namespace UnitTests
 {
+    [TestFixture]
     public class Tests
     {
-        
+      //  Orientation hey;
+    //    Orientation orientation;
         [SetUp]
         public void Setup()
         {
-
+            Player player = new Player(new DIKUArcade.Entities.DynamicShape(0f,0f,0f,0f));
         }
 
         [Test]
