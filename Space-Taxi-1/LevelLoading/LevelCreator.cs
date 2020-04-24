@@ -7,6 +7,7 @@ namespace SpaceTaxi_1.LevelLoading {
         private List<string> LegendIndexFinder;
         private Reader reader;
 
+        // constructor of the levelcreator
         public LevelCreator() {
             reader = new Reader();
             LegendIndexFinder = new List<string>();

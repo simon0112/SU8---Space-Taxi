@@ -19,6 +19,8 @@ namespace SpaceTaxi_1 {
         private Level level;
         private LevelCreator levelCreator;
 
+
+        // the game class constructor
         public Game(string LvlName) {
             // window
             win = new Window("Space Taxi Game v0.1", 500, AspectRatio.R1X1);
@@ -53,7 +55,7 @@ namespace SpaceTaxi_1 {
 
             eventBus.Subscribe(GameEventType.PlayerEvent, level.ReturnPlayer());
         }
-
+        // gameloop, runs the project
         public void GameLoop() {
             while (win.IsRunning()) {
                 gameTimer.MeasureTime();
@@ -79,7 +81,7 @@ namespace SpaceTaxi_1 {
                 }
             }
         }
-
+        // register the events if one of the casses is called. 
         public void KeyPress(string key) {
             switch (key) {
             case "KEY_ESCAPE":

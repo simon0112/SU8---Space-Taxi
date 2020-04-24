@@ -5,12 +5,15 @@ using System;
 
 namespace SpaceTaxi_1.LevelLoading {
     public class Reader {
+        // creates the list, so we can get the value if needed.
+        // Or sets the value.
         public List<string> MapData {get; private set;}
         public List<string> MetaData {get; private set;}
         public List<string> LegendData {get; private set;}
         public List<string> CustomerData {get; private set;}
 
-
+        // constructor of the reader class.
+        // its being sets when the class is called.
         public Reader() {
             this.MapData = new List<string>();
             this.MetaData = new List<string>();

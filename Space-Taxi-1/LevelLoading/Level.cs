@@ -9,6 +9,7 @@ namespace SpaceTaxi_1.LevelLoading {
         private EntityContainer obstacles;
         private Player Player;
 
+        // constructor of level class
         public Level() {
             obstacles = new EntityContainer();
         }
@@ -27,10 +28,11 @@ namespace SpaceTaxi_1.LevelLoading {
             obstacles.AddStationaryEntity(obs, img);
         }
 
+        // adds the player if needed
         public void AddPlayer(DynamicShape play) {
             Player = new Player(play);
         }
-
+        // returns the player
         public Player ReturnPlayer() {
             return this.Player;
         }
