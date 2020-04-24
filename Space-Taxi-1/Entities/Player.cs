@@ -11,17 +11,19 @@ namespace SpaceTaxi_1.Entities {
         public Orientation orientation {get; private set;}
         public Entity Entity {get; private set;}
 
-        // Player class constructor
-        // it creates a player with a shape given in four vectors as its position.
-        // and an image.
+        //<summary> player constructor <summary/>
+        //<input> type = DynamicShape, name = shape </insput>
+        //<return>  </insput> 
         public Player(DynamicShape shape) {
 
             Entity = new Entity(shape, new DIKUArcade.Graphics.Image(Path.Combine("Assets","Images","Taxi_Thrust_None_Right.png")));
             orientation = new Orientation();
             // Entity.Shape.AsDynamicShape().Direction = (new Vec2F(0,(float) 0.0011));
         }
-        // sets the Orientation value to either left or right,
-        // depending on what image we want to be displayed.
+        //<summary> sets the Orientation value to either left or right,
+        // depending on what image we want to be displayed. <summary/>
+        //<input> type = Orientation, name = value </insput>
+        //<return> void </insput> 
         public void playerIsLeftOrRight(Orientation value)
         {
             if (value == Orientation.Left)
@@ -36,9 +38,12 @@ namespace SpaceTaxi_1.Entities {
                 this.orientation = Orientation.Right;
             }
         }
-        // executeds the code that is deceiding if the left, right, down or up key is pressed.
+        
+        //<summary> executeds the code that is deceiding if the left, right, down or up key is pressed.
         // and then deceiding how long the vectors is moving our player, and sets the right image
-        // using the playerIsLeftOrRight() methode.
+        // using the playerIsLeftOrRight() methode. <summary/>
+        //<input> type = gameEventType and GameEvent<object> , name = gameEvent and eventType </insput>
+        //<return> void </insput> 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             Orientation value = Orientation.Left;
             if (eventType == GameEventType.PlayerEvent) {
@@ -90,13 +95,19 @@ namespace SpaceTaxi_1.Entities {
             }    
         }  
         
-        // this methode is choosing what direction the player is moving in,
-        // depending on the key pressed.
+        
+        //<summary> this methode is choosing what direction the player is moving in,
+        // depending on the key pressed. <summary/>
+        //<input> type = Vec2f, name = dir </insput>
+        //<return> void </insput> 
         private void Direction(Vec2F dir) {
             Entity.Shape.AsDynamicShape().ChangeDirection(dir);
         }
-        // this methode helps us make sure that the player is only running inside
-        // the screen space. So the player stops moving if it reach one of the sides.
+        
+        //<summary> this methode helps us make sure that the player is only running inside
+        // the screen space. So the player stops moving if it reach one of the sides. <summary/>
+        //<input> none </insput>
+        //<return> void </insput> 
         public void Move() {
             if (Entity.Shape.Position.X > 0f && Entity.Shape.Position.X < 0.97f) {
                 Entity.Shape.Move();

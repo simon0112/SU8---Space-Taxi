@@ -13,6 +13,9 @@ namespace SpaceTaxi_1.LevelLoading {
             LegendIndexFinder = new List<string>();
         }
         
+        //<summary> creates an instance of the Level class <summary/>
+        //<input> string levelname</insput>
+        //<return> Level </insput> 
         public Level CreateLevel(string levelname) {
             // Create the Level here.
             Level level = new Level();
