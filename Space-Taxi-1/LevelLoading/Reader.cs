@@ -23,7 +23,7 @@ namespace SpaceTaxi_1.LevelLoading {
         //<summary> first creates it two int objetcs. 
         // then it get each line of file as an entry in array lines. <summary/>
         //<input> type = string, name = filename </insput>
-        //<return> void </insput> 
+        //<return> void. </insput> 
         public void ReadFile(string filename) {
             int CustomerDataStart = -1;
             int linePointer = 0;

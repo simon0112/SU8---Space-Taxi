@@ -5,11 +5,12 @@ using SpaceTaxi_1.Entities;
 using SpaceTaxi_1.Enums;
 using SpaceTaxi_1.LevelLoading;
 using DIKUArcade.Math;
-using System.IO;
-using System.Reflection;
 using DIKUArcade.EventBus;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
+using System.IO;
+using System;
+
 
 
 namespace UnitTests
@@ -21,6 +22,7 @@ namespace UnitTests
         Level level;
         LevelCreator levelcreator;
 
+        public Player player;
         [SetUp]
         public void Setup()
         {
@@ -28,6 +30,8 @@ namespace UnitTests
             player = new Player(new DIKUArcade.Entities.DynamicShape(new Vec2F(0.5f,0.5f),new Vec2F(0.1f,0.1f)));
             levelcreator = new LevelCreator();
             level = levelcreator.CreateLevel("short-n-sweet.txt");
+            var player = new Player(new DIKUArcade.Entities.DynamicShape(new Vec2F(0.5f,0.5f),new Vec2F(0.1f,0.1f)));
+            
             
         }
 
