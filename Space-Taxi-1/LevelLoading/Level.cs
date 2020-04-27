@@ -7,7 +7,7 @@ namespace SpaceTaxi_1.LevelLoading {
     public class Level {
         // Add fields as needed
         public EntityContainer obstacles {private set; get;}
-        public Player Player {private set; get;}
+        private Player Player;
 
         // constructor of level class.
         public Level() {

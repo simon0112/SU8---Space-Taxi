@@ -36,7 +36,7 @@ namespace UnitTests
         //Level tests
         [Test]
         public void TestOfPlayerPlacement() {
-            var test = level.Player.Entity.Shape.Position;
+            var test = level.ReturnPlayer().Entity.Shape.Position;
             Assert.AreEqual(test.X, ((float)32/(float)levelcreator.reader.MapData[19].Length), 0.1);
             Assert.AreEqual(test.Y, (-1*((float)19/-(float) levelcreator.reader.MapData.Count)), 0.1);
         }
