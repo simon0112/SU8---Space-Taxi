@@ -35,9 +35,14 @@ namespace UnitTests
 
         //Level tests
         [Test]
-        public void TestOfPlayerPlacement() {
+        public void TestOfPlayerPlacementX() {
             var test = level.ReturnPlayer().Entity.Shape.Position;
             Assert.AreEqual(test.X, ((float)32/(float)levelcreator.reader.MapData[19].Length), 0.1);
+        }
+
+        [Test]
+        public void TestOfPlayerPlacementY() {
+            var test = level.ReturnPlayer().Entity.Shape.Position;
             Assert.AreEqual(test.Y, (-1*((float)19/-(float) levelcreator.reader.MapData.Count)), 0.1);
         }
 
@@ -54,6 +59,42 @@ namespace UnitTests
         {
             player.playerIsLeftOrRight(Orientation.Right);
             Assert.AreEqual(Orientation.Right, player.orientation);
+        }
+
+        //Reader tests
+        [Test]
+        public void testStartMapDataNotSkipped() {
+            Assert.AreEqual("%#%#%#%#%#%#%#%#%#^^^^^^%#%#%#%#%#%#%#%#", levelcreator.reader.MapData[0]);
+        }
+
+        [Test]
+        public void testEndMapDataNotSkipped() {
+            Assert.AreEqual("%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#", levelcreator.reader.MapData[22]);
+        }
+
+        [Test]
+        public void testStartMetaDataNotSkipped() {
+            Assert.AreEqual("Name: SHORT -N- SWEET", levelcreator.reader.MetaData[0]);
+        }
+
+        [Test]
+        public void testEndMetaDataNotSkipped() {
+            Assert.AreEqual("Platforms: 1", levelcreator.reader.MetaData[levelcreator.reader.MetaData.Count-1]);
+        }
+
+        [Test]
+        public void testStartLegendDataNotSkipped() {
+            Assert.AreEqual("%) white-square.png", levelcreator.reader.LegendData[0]);
+        }
+
+        [Test]
+        public void testEndLegendDataNotSkipped() {
+            Assert.AreEqual("x) white-lower-right.png", levelcreator.reader.LegendData[levelcreator.reader.LegendData.Count-1]);
+        }
+
+        [Test]
+        public void testCustomerDataNotSkipper() {
+            Assert.AreEqual("Customer: Alice 10 1 ^J 10 100", levelcreator.reader.CustomerData[0]);
         }
     }
 }
