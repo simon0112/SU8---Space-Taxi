@@ -70,7 +70,7 @@ namespace SpaceTaxi_1 {
         ///<summary>The main Game loop, used to render, and process events in an orderly fashion</summary>
         ///<returns> void </returns>
         public void GameLoop() {
-            StateMachine.StateMachine stateMachine = new StateMachine.StateMachine(); 
+           // StateMachine.StateMachine stateMachine = new StateMachine.StateMachine(); 
             while (win.IsRunning()) {
                 gameTimer.MeasureTime();
                 while (gameTimer.ShouldUpdate()) {
