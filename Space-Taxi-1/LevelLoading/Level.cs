@@ -14,6 +14,10 @@ namespace SpaceTaxi_1.LevelLoading {
             obstacles = new EntityContainer();
         }
 
+        public void EmptyData() {
+            obstacles.ClearContainer();
+        }
+
         ///<summary> updates the level logic <summary/>
         ///<returns> void </returns> 
         public void UpdateLevelLogic() {

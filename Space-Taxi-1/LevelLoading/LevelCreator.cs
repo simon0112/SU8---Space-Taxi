@@ -6,6 +6,8 @@ namespace SpaceTaxi_1.LevelLoading {
         // add fields as you see fit
         private List<string> LegendIndexFinder;
         public Reader reader {private set; get;}
+        private string ImageName;
+        private int ImageIndex;
 
         ///<summary> the instantiator of the LevelCreator object</summary>
         ///<variable name="reader"> the reader that reads the files that save how the levels look</variable>
@@ -14,6 +16,13 @@ namespace SpaceTaxi_1.LevelLoading {
         public LevelCreator() {
             reader = new Reader();
             LegendIndexFinder = new List<string>();
+        }
+
+        public void EmptyData() {
+            reader.EmptyData();
+            this.LegendIndexFinder.RemoveRange(0, LegendIndexFinder.Count);
+            this.ImageIndex = 0;
+            this.ImageName = "";
         }
         
         ///<summary> Creates and instantiates the level object, also adds obstacles and the player to the level<summary/>
@@ -40,8 +49,8 @@ namespace SpaceTaxi_1.LevelLoading {
                      if (reader.MapData[(int) y].Substring((int) x, 1) == ">") {
                         level.AddPlayer(new DIKUArcade.Entities.DynamicShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count)));
                     } else if (reader.MapData[(int) y].Substring((int) x, 1) != " " && reader.MapData[(int) y].Substring((int) x, 1) != "^") {
-                        var ImageIndex = LegendIndexFinder.IndexOf(reader.MapData[(int) y].Substring((int) x, 1));
-                        var ImageName = reader.LegendData[ImageIndex].Substring(3);
+                        ImageIndex = LegendIndexFinder.IndexOf(reader.MapData[(int) y].Substring((int) x, 1));
+                        ImageName = reader.LegendData[ImageIndex].Substring(3);
                         level.AddObstacle((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
                     }
                 }

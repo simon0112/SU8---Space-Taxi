@@ -19,6 +19,10 @@ namespace SpaceTaxi_1.StateMachine {
                     ActiveState = GamePaused.GetInstance();
                     break;
                 case GameStateType.MainMenu:
+                    if (ActiveState == GamePaused.GetInstance()) {
+                        GameRunning.GetInstance().ReturnLevelCreator().EmptyData();
+                        GameRunning.GetInstance().ReturnLevel().EmptyData();
+                    }
                     ActiveState = MainMenu.GetInstance();
                     break;
                 case GameStateType.LevelSelect:

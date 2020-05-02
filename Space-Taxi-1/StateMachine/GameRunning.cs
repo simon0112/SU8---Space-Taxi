@@ -122,5 +122,13 @@ namespace SpaceTaxi_1.StateMachine {
             level = levelCreator.CreateLevel(lvlName);
             eventBus.Subscribe(GameEventType.PlayerEvent, level.ReturnPlayer());
         }
+
+        public LevelCreator ReturnLevelCreator() {
+            return this.levelCreator;
+        }
+
+        public Level ReturnLevel() {
+            return this.level;
+        }
     }
 }
