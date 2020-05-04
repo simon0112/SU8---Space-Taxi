@@ -42,7 +42,7 @@ namespace SpaceTaxi_1.StateMachine {
 
         public void UpdateGameLogic() {
             if (!GameOverActive) {
-                level.ReturnPlayer().GravityEffect();
+                level.ReturnPlayer().PhysicsEffect();
                 level.ReturnPlayer().Move();
             }
         }

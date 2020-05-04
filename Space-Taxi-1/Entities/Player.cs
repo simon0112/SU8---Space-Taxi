@@ -9,9 +9,10 @@ using SpaceTaxi_1.Enums;
 namespace SpaceTaxi_1.Entities {
     public class Player : IGameEventProcessor<object> {
         public Orientation orientation {get; private set;}
+        private MoveDir moveDir;
         public Entity Entity {get; private set;}
         private int UpdatesSinceLastMovement;
-        private Vec2F Gravity = new Vec2F(0f,-0.0000005f);
+        private Vec2F Gravity = new Vec2F(0f,-0.00005f);
 
         ///<summary> player constructor <summary/>
         ///<variable name="shape"> The Dynamic shape that the player is, the players placement and bounds</variable>
@@ -22,6 +23,7 @@ namespace SpaceTaxi_1.Entities {
 
             Entity = new Entity(shape, new DIKUArcade.Graphics.Image(Path.Combine("Assets","Images","Taxi_Thrust_None_Right.png")));
             orientation = new Orientation();
+            moveDir = MoveDir.None;
         }
         ///<summary> sets the Orientation value to either left or right, depending on what image we want to be displayed. <summary/>
         ///<variable name="value"> A value using the Orientation enumeration.</variable>
@@ -45,8 +47,27 @@ namespace SpaceTaxi_1.Entities {
             Direction(this.Entity.Shape.AsDynamicShape().Direction + (value+Gravity)*UpdateAmt);
         }
 
-        public void GravityEffect() {
-            Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+        public void PhysicsEffect() {
+            switch (moveDir) {
+                case MoveDir.None:
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    break;
+                case MoveDir.Left:
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00040f, 0.0000f)+Gravity)*1);
+                    break;
+                case MoveDir.Right:
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00040f, 0.0000f)+Gravity)*1);
+                    break;
+                case MoveDir.Up:
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.0001f)+Gravity)*1);
+                    break;
+                case MoveDir.LeftUp:
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.0002828f, 0.0002828f)+Gravity)*1);
+                    break;
+                case MoveDir.RightUp:
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0002828f, 0.0002828f)+Gravity)*1);
+                    break;
+            }
         }
         
         ///<summary> The processEvent that is related to the player, it processes playerevents based on what the message of that event is in the eventBus <summary/>
@@ -65,16 +86,16 @@ namespace SpaceTaxi_1.Entities {
                 switch(gameEvent.Message){
                     case "BOOSTER_TO_LEFT":
                         value = Orientation.Left;
-                        playerIsLeftOrRight(value);
-                        this.AddAcceleration(new Vec2F(-0.00040f, 0.0000f), UpdatesSinceLastMovement);
+                        this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Back.png"));
+                        moveDir = MoveDir.Left;
                         break;
                     case "BOOSTER_TO_RIGHT":
                         value = Orientation.Right;
-                        playerIsLeftOrRight(value);
-                        this.AddAcceleration(new Vec2F(0.00040f, 0.0000f), UpdatesSinceLastMovement);
+                        this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Back_Right.png"));
+                        moveDir = MoveDir.Right;
                         break;
                     case "BOOSTER_UPWARDS":
-                        this.AddAcceleration(new Vec2F(0.0000f, 0.0001f), UpdatesSinceLastMovement);
+                        moveDir = MoveDir.Up;
                         switch (value) {
                             case Orientation.Left:
                                 this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom.png"));
@@ -85,21 +106,23 @@ namespace SpaceTaxi_1.Entities {
                         }
                         break;
                     case "BOOSTER_UP_LEFT":
-                        this.AddAcceleration(new Vec2F(-0.0002828f, 0.0002828f), UpdatesSinceLastMovement);
+                        moveDir = MoveDir.LeftUp;
+                        this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back.png"));
                         break;
                     case "BOOSTER_UP_RIGHT":
-                        this.AddAcceleration(new Vec2F(0.0002828f, 0.0002828f), UpdatesSinceLastMovement);
+                        moveDir = MoveDir.RightUp;
+                        this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back_Right.png"));
                         break;
                     case "STOP_ACCELERATE_LEFT":
-                        this.AddAcceleration(new Vec2F(0f, 0f), UpdatesSinceLastMovement);
+                        moveDir = MoveDir.None;
                         playerIsLeftOrRight(value);
                         break;
                     case "STOP_ACCELERATE_RIGHT":
-                        this.AddAcceleration(new Vec2F(0f, 0f), UpdatesSinceLastMovement);
+                        moveDir = MoveDir.None;
                         playerIsLeftOrRight(value);
                         break;
                     case "STOP_ACCELERATE_UP":
-                        this.AddAcceleration(new Vec2F(0f, 0f), UpdatesSinceLastMovement);
+                        moveDir = MoveDir.None;
                         playerIsLeftOrRight(value);
                         break;
                 }     
