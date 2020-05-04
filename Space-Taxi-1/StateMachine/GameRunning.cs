@@ -20,22 +20,21 @@ namespace SpaceTaxi_1.StateMachine {
         private LevelCreator levelCreator;
         private Level level;
         private bool GameOverActive = false;
-        private int Pattern = 0;
         private GameEventBus<object> eventBus;
+        private bool UpIsActive = false;
 
         public static GameRunning GetInstance() {
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
         }
 
         public void GameLoop() {
-            
+
         }
 
         public void InitializeGameState() {
             levelCreator = new LevelCreator();
             
             eventBus = Utilities.EventBus.GetBus();
-            
         }
         public void GameOver() {
             GameOverActive = true;
@@ -43,6 +42,7 @@ namespace SpaceTaxi_1.StateMachine {
 
         public void UpdateGameLogic() {
             if (!GameOverActive) {
+                level.ReturnPlayer().GravityEffect();
                 level.ReturnPlayer().Move();
             }
         }
@@ -67,24 +67,32 @@ namespace SpaceTaxi_1.StateMachine {
         private void KeyPress(string key) {
             switch(key) {
                 case "KEY_UP":
+                UpIsActive = true;
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "BOOSTER_UPWARDS", "", ""));
-                break;
-            case "KEY_DOWN":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "BOOSTER_DOWNWARDS", "", ""));
+                        GameEventType.MovementEvent, this, "BOOSTER_UPWARDS", "", ""));
                 break;
             case "KEY_LEFT":
-                eventBus.RegisterEvent(
+                if (UpIsActive) {
+                    eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "BOOSTER_TO_LEFT", "", ""));
+                        GameEventType.MovementEvent, this, "BOOSTER_UP_LEFT", "", ""));
+                } else {
+                    eventBus.RegisterEvent(
+                        GameEventFactory<object>.CreateGameEventForAllProcessors(
+                            GameEventType.MovementEvent, this, "BOOSTER_TO_LEFT", "", ""));
+                }
                 break;
             case "KEY_RIGHT":
-                eventBus.RegisterEvent(
+                if (UpIsActive) {
+                    eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "BOOSTER_TO_RIGHT", "", ""));
+                        GameEventType.MovementEvent, this, "BOOSTER_UP_RIGHT", "", ""));
+                } else {
+                    eventBus.RegisterEvent(
+                        GameEventFactory<object>.CreateGameEventForAllProcessors(
+                            GameEventType.MovementEvent, this, "BOOSTER_TO_RIGHT", "", ""));
+                }
                 break;
             }
         }
@@ -93,22 +101,18 @@ namespace SpaceTaxi_1.StateMachine {
             case "KEY_LEFT":
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "STOP_ACCELERATE_LEFT", "", ""));
+                        GameEventType.MovementEvent, this, "STOP_ACCELERATE_LEFT", "", ""));
                 break;
             case "KEY_RIGHT":
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "STOP_ACCELERATE_RIGHT", "", ""));
+                        GameEventType.MovementEvent, this, "STOP_ACCELERATE_RIGHT", "", ""));
                 break;
             case "KEY_UP":
+                UpIsActive = false;
                 eventBus.RegisterEvent(
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "STOP_ACCELERATE_UP", "", ""));
-                break;
-            case "KEY_DOWN":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.PlayerEvent, this, "STOP_ACCELERATE_DOWN", "", ""));
+                        GameEventType.MovementEvent, this, "STOP_ACCELERATE_UP", "", ""));
                 break;
             }
         }
@@ -120,7 +124,8 @@ namespace SpaceTaxi_1.StateMachine {
 
         public void CreateLevel(string lvlName) {
             level = levelCreator.CreateLevel(lvlName);
-            eventBus.Subscribe(GameEventType.PlayerEvent, level.ReturnPlayer());
+            eventBus.Subscribe(GameEventType.MovementEvent, level.ReturnPlayer());
+            eventBus.Subscribe(GameEventType.TimedEvent, level.ReturnPlayer());
         }
 
         public LevelCreator ReturnLevelCreator() {

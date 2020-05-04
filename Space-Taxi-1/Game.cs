@@ -40,6 +40,8 @@ namespace SpaceTaxi_1 {
                 GameEventType.WindowEvent, // messages to the window, e.g. CloseWindow()
                 GameEventType.PlayerEvent, // commands issued to the player object, e.g. move,
                 GameEventType.GameStateEvent,
+                GameEventType.TimedEvent,
+                GameEventType.MovementEvent,
                                           // destroy, receive health, etc.
             });
             win.RegisterEventBus(eventBus);
@@ -65,6 +67,8 @@ namespace SpaceTaxi_1 {
             eventBus.Subscribe(GameEventType.WindowEvent, this);
             eventBus.Subscribe(GameEventType.PlayerEvent, this);
             eventBus.Subscribe(GameEventType.GameStateEvent, this);
+            eventBus.Subscribe(GameEventType.TimedEvent, this);
+            eventBus.Subscribe(GameEventType.MovementEvent, this);
 
         }
         ///<summary>The main Game loop, used to render, and process events in an orderly fashion</summary>
@@ -87,6 +91,15 @@ namespace SpaceTaxi_1 {
                     // could display something, 1 second has passed
                 }
             }
+        }
+
+        private void DeliverUpdateAmount(int amt) {
+            eventBus.RegisterEvent(
+                GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.TimedEvent,
+                        this,
+                        "UPDATE_AMT_DELIVERY",
+                        amt.ToString(), ""));
         }
         
         ///<summary> register the events if one of the casses is called. <summary/>
@@ -115,13 +128,16 @@ namespace SpaceTaxi_1 {
         ///<return> void, but runs functions depending on what the event consists of </returns> 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             switch (eventType) {
-            case GameEventType.WindowEvent:
-                switch (gameEvent.Message) {
-                case "CLOSE_WINDOW":
-                    win.CloseWindow();
+                case GameEventType.WindowEvent:
+                    switch (gameEvent.Message) {
+                    case "CLOSE_WINDOW":
+                        win.CloseWindow();
+                        break;
+                    }
                     break;
-                }
-                break;
+                case GameEventType.MovementEvent:
+                    DeliverUpdateAmount(gameTimer.CapturedUpdates);
+                    break;
             }
         }
     }
