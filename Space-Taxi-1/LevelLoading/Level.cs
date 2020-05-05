@@ -6,12 +6,16 @@ using SpaceTaxi_1.Entities;
 namespace SpaceTaxi_1.LevelLoading {
     public class Level {
         // Add fields as needed
-        private EntityContainer obstacles;
+        public EntityContainer obstacles {private set; get;}
         private Player Player;
 
         // constructor of level class.
         public Level() {
             obstacles = new EntityContainer();
+        }
+
+        public void EmptyData() {
+            obstacles.ClearContainer();
         }
 
         ///<summary> updates the level logic <summary/>

@@ -60,5 +60,12 @@ namespace SpaceTaxi_1.LevelLoading {
                 this.CustomerData.Add(lines[i]);
             }
         }
+
+        public void EmptyData() {
+            this.CustomerData.RemoveRange(0, CustomerData.Count);
+            this.LegendData.RemoveRange(0, LegendData.Count);
+            this.MetaData.RemoveRange(0, MetaData.Count);
+            this.MapData.RemoveRange(0, MapData.Count);
+        }
     }
 }

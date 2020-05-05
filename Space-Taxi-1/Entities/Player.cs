@@ -6,6 +6,7 @@ using System.IO;
 using System;
 using SpaceTaxi_1.Enums;
 
+<<<<<<< HEAD
 namespace SpaceTaxi_1.Entities
 {
     public class Player : IGameEventProcessor<object>
@@ -14,6 +15,14 @@ namespace SpaceTaxi_1.Entities
         public Entity Entity { get; private set; }
         private int UpdatesSinceLastMovement;
         private Vec2F Gravity = new Vec2F(0f, -0.0000005f);
+=======
+namespace SpaceTaxi_1.Entities {
+    public class Player : IGameEventProcessor<object> {
+        public Orientation orientation {get; private set;}
+        public Entity Entity {get; private set;}
+        private int UpdatesSinceLastMovement;
+        private Vec2F Gravity = new Vec2F(0f,-0.0000005f);
+>>>>>>> d57ddeeff8ad27c4c7fff56dcbd081b423ae080a
 
         ///<summary> player constructor <summary/>
         ///<variable name="shape"> The Dynamic shape that the player is, the players placement and bounds</variable>
@@ -44,6 +53,7 @@ namespace SpaceTaxi_1.Entities
             }
         }
 
+<<<<<<< HEAD
         public void AddAcceleration(Vec2F value, int UpdateAmt)
         {
             Direction(this.Entity.Shape.AsDynamicShape().Direction + (value + Gravity) * UpdateAmt);
@@ -54,6 +64,16 @@ namespace SpaceTaxi_1.Entities
             Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity) * 1);
         }
 
+=======
+        public void AddAcceleration(Vec2F value, int UpdateAmt) {
+            Direction(this.Entity.Shape.AsDynamicShape().Direction + (value+Gravity)*UpdateAmt);
+        }
+
+        public void GravityEffect() {
+            Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+        }
+        
+>>>>>>> d57ddeeff8ad27c4c7fff56dcbd081b423ae080a
         ///<summary> The processEvent that is related to the player, it processes playerevents based on what the message of that event is in the eventBus <summary/>
         ///<variable name="eventType"> The event type that is related to the specific game event in the eventBus</variable>
         ///<variable name="gameEvent"> The game event itself </variable>
@@ -61,6 +81,7 @@ namespace SpaceTaxi_1.Entities
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent)
         {
             Orientation value = Orientation.Left;
+<<<<<<< HEAD
             if (eventType == GameEventType.TimedEvent)
             {
                 switch (gameEvent.Message)
@@ -74,6 +95,16 @@ namespace SpaceTaxi_1.Entities
             {
                 switch (gameEvent.Message)
                 {
+=======
+            if (eventType == GameEventType.TimedEvent) {
+                switch (gameEvent.Message) {
+                    case "UPDATE_AMT_DELIVERY":
+                        UpdatesSinceLastMovement = (int.Parse(gameEvent.Parameter1))/60;
+                        break;
+                }
+            } else if (eventType == GameEventType.MovementEvent) {
+                switch(gameEvent.Message){
+>>>>>>> d57ddeeff8ad27c4c7fff56dcbd081b423ae080a
                     case "BOOSTER_TO_LEFT":
                         value = Orientation.Left;
                         playerIsLeftOrRight(value);
@@ -86,8 +117,12 @@ namespace SpaceTaxi_1.Entities
                         break;
                     case "BOOSTER_UPWARDS":
                         this.AddAcceleration(new Vec2F(0.0000f, 0.0001f), UpdatesSinceLastMovement);
+<<<<<<< HEAD
                         switch (value)
                         {
+=======
+                        switch (value) {
+>>>>>>> d57ddeeff8ad27c4c7fff56dcbd081b423ae080a
                             case Orientation.Left:
                                 this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom.png"));
                                 break;
@@ -114,11 +149,19 @@ namespace SpaceTaxi_1.Entities
                         this.AddAcceleration(new Vec2F(0f, 0f), UpdatesSinceLastMovement);
                         playerIsLeftOrRight(value);
                         break;
+<<<<<<< HEAD
                 }
             }
         }
 
 
+=======
+                }     
+            }
+        }  
+        
+        
+>>>>>>> d57ddeeff8ad27c4c7fff56dcbd081b423ae080a
         //<summary> this methode is choosing what direction the player is moving in,
         // depending on the key pressed. <summary/>
         //<input> type = Vec2f, name = dir </insput>
@@ -154,9 +197,13 @@ namespace SpaceTaxi_1.Entities
             if (Entity.Shape.Position.Y > -0.005f && Entity.Shape.Position.Y < 0.955f)
             {
                 Entity.Shape.Move();
+<<<<<<< HEAD
             }
             else
             {
+=======
+            } else {
+>>>>>>> d57ddeeff8ad27c4c7fff56dcbd081b423ae080a
                 this.Direction(new Vec2F(0f, 0f));
             }
         }
