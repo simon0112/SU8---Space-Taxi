@@ -11,8 +11,7 @@ namespace SpaceTaxi_1.Entities {
         public Orientation orientation {get; private set;}
         private MoveDir moveDir;
         public Entity Entity {get; private set;}
-        private int UpdatesSinceLastMovement;
-        private Vec2F Gravity = new Vec2F(0f,-0.00005f);
+        private Vec2F Gravity = new Vec2F(0f,-0.000005f);
 
         ///<summary> player constructor <summary/>
         ///<variable name="shape"> The Dynamic shape that the player is, the players placement and bounds</variable>
