@@ -42,29 +42,54 @@ namespace SpaceTaxi_1.Entities {
             }
         }
 
-        public void AddAcceleration(Vec2F value, int UpdateAmt) {
-            Direction(this.Entity.Shape.AsDynamicShape().Direction + (value+Gravity)*UpdateAmt);
-        }
-
         private void PhysicsEffect() {
             switch (moveDir) {
                 case MoveDir.None:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
                     break;
                 case MoveDir.Left:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.000040f, 0.0000f)+Gravity)*1);
+                    if (this.Entity.Shape.AsDynamicShape().Direction.X >= -0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.000040f, 0.0000f))*1);
+                    }
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
                     break;
                 case MoveDir.Right:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.000040f, 0.0000f)+Gravity)*1);
+                    if (this.Entity.Shape.AsDynamicShape().Direction.X <= 0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.000040f, 0.0000f))*1);
+                    }
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
                     break;
                 case MoveDir.Up:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.00004f)+Gravity)*1);
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.00004f))*1);
+                    }
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
                     break;
                 case MoveDir.LeftUp:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00002828f, 0.00002828f)+Gravity)*1);
+                    if (this.Entity.Shape.AsDynamicShape().Direction.X >= -0.0005f || this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00002828f, 0.00002828f))*1);
+                    }
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
                     break;
                 case MoveDir.RightUp:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00002828f, 0.00002828f)+Gravity)*1);
+                    if (this.Entity.Shape.AsDynamicShape().Direction.X <= 0.0005f || this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00002828f, 0.00002828f))*1);
+                    }
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
+                    break;
+                case MoveDir.Crashed:
                     break;
             }
             Move();
@@ -76,64 +101,75 @@ namespace SpaceTaxi_1.Entities {
         ///<return> void, but runs functions depending on what the event consists of </insput> 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             Orientation value = Orientation.Left;
-            if (eventType == GameEventType.TimedEvent) {
-                switch (gameEvent.Message) {
+            switch (eventType) {
+                case GameEventType.PlayerEvent:
+                    switch (gameEvent.Message) {
+                        case "PLAYER_LANDED":
+                            this.Direction(new Vec2F(0f,0f));
+                            this.moveDir = MoveDir.Crashed;
+                            break;
+                    }
+                    break;
+                case GameEventType.TimedEvent:
+                    switch (gameEvent.Message) {
                     case "UPDATE_PHYSICS":
                         PhysicsEffect();
                         break;
-                }
-            } else if (eventType == GameEventType.MovementEvent) {
-                switch(gameEvent.Message){
-                    case "BOOSTER_TO_LEFT":
-                        value = Orientation.Left;
-                        this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Back.png"));
-                        moveDir = MoveDir.Left;
-                        break;
-                    case "BOOSTER_TO_RIGHT":
-                        value = Orientation.Right;
-                        this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Back_Right.png"));
-                        moveDir = MoveDir.Right;
-                        break;
-                    case "BOOSTER_UPWARDS":
-                        moveDir = MoveDir.Up;
-                        switch (value) {
-                            case Orientation.Left:
-                                this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom.png"));
-                                break;
-                            case Orientation.Right:
-                                this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Right.png"));
-                                break;
-                        }
-                        break;
-                    case "BOOSTER_UP_LEFT":
-                        moveDir = MoveDir.LeftUp;
-                        this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back.png"));
-                        break;
-                    case "BOOSTER_UP_RIGHT":
-                        moveDir = MoveDir.RightUp;
-                        this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back_Right.png"));
-                        break;
-                    case "STOP_ACCELERATE_LEFT":
-                        if (moveDir == MoveDir.LeftUp) {
+                    }
+                    break;
+                case GameEventType.MovementEvent:
+                    switch(gameEvent.Message){
+                        case "BOOSTER_TO_LEFT":
+                            value = Orientation.Left;
+                            this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Back.png"));
+                            moveDir = MoveDir.Left;
+                            break;
+                        case "BOOSTER_TO_RIGHT":
+                            value = Orientation.Right;
+                            this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Back_Right.png"));
+                            moveDir = MoveDir.Right;
+                            break;
+                        case "BOOSTER_UPWARDS":
                             moveDir = MoveDir.Up;
-                        } else {
-                        moveDir = MoveDir.None;
-                        }
-                        playerIsLeftOrRight(value);
-                        break;
-                    case "STOP_ACCELERATE_RIGHT":
-                        if (moveDir == MoveDir.RightUp) {
-                            moveDir = MoveDir.Up;
-                        } else {
-                        moveDir = MoveDir.None;
-                        }
-                        playerIsLeftOrRight(value);
-                        break;
-                    case "STOP_ACCELERATE_UP":
-                        moveDir = MoveDir.None;
-                        playerIsLeftOrRight(value);
-                        break;
-                }     
+                            switch (value) {
+                                case Orientation.Left:
+                                    this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom.png"));
+                                    break;
+                                case Orientation.Right:
+                                    this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Right.png"));
+                                    break;
+                            }
+                            break;
+                        case "BOOSTER_UP_LEFT":
+                            moveDir = MoveDir.LeftUp;
+                            this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back.png"));
+                            break;
+                        case "BOOSTER_UP_RIGHT":
+                            moveDir = MoveDir.RightUp;
+                            this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back_Right.png"));
+                            break;
+                        case "STOP_ACCELERATE_LEFT":
+                            if (moveDir == MoveDir.LeftUp) {
+                                moveDir = MoveDir.Up;
+                            } else {
+                            moveDir = MoveDir.None;
+                            }
+                            playerIsLeftOrRight(value);
+                            break;
+                        case "STOP_ACCELERATE_RIGHT":
+                            if (moveDir == MoveDir.RightUp) {
+                                moveDir = MoveDir.Up;
+                            } else {
+                            moveDir = MoveDir.None;
+                            }
+                            playerIsLeftOrRight(value);
+                            break;
+                        case "STOP_ACCELERATE_UP":
+                            moveDir = MoveDir.None;
+                            playerIsLeftOrRight(value);
+                            break;
+                    }
+                    break;
             }
         }  
         
