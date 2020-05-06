@@ -7,15 +7,21 @@ namespace SpaceTaxi_1.LevelLoading {
     public class Level {
         // Add fields as needed
         public EntityContainer obstacles {private set; get;}
+        public EntityContainer platforms {private set; get;}
+        public EntityContainer portal {private set; get;}
         private Player Player;
 
         // constructor of level class.
         public Level() {
             obstacles = new EntityContainer();
+            platforms = new EntityContainer();
+            portal = new EntityContainer();
         }
 
         public void EmptyData() {
             obstacles.ClearContainer();
+            platforms.ClearContainer();
+            portal.ClearContainer();
         }
 
         ///<summary> updates the level logic <summary/>
@@ -29,7 +35,13 @@ namespace SpaceTaxi_1.LevelLoading {
         public void RenderLevelObjects() {
             // all rendering here
             obstacles.RenderEntities();
+<<<<<<< HEAD
             Player.entity.RenderEntity();
+=======
+            platforms.RenderEntities();
+            portal.RenderEntities();
+            Player.Entity.RenderEntity();
+>>>>>>> ff80e1873717e6fd7e6e651c760e77bcb241ebbc
         }
 
         ///<summary> render the logic in the level objects <summary/>
@@ -38,6 +50,14 @@ namespace SpaceTaxi_1.LevelLoading {
         ///<returns> void </returns> 
         public void AddObstacle(StationaryShape obs, Image img) {
             obstacles.AddStationaryEntity(obs, img);
+        }
+
+        public void AddPlatform(StationaryShape obs, Image img) {
+            platforms.AddStationaryEntity(obs, img);
+        }
+
+        public void AddPortal(StationaryShape obs, Image img) {
+            portal.AddStationaryEntity(obs, img);
         }
 
         ///<summary> adds the player if needed <summary/>

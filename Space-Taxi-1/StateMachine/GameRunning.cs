@@ -42,8 +42,17 @@ namespace SpaceTaxi_1.StateMachine {
 
         public void UpdateGameLogic() {
             if (!GameOverActive) {
-                level.ReturnPlayer().GravityEffect();
-                level.ReturnPlayer().Move();
+                UpdatePhysics();
+                DetectCollision();
+            }
+        }
+
+        private void DetectCollision() {
+            foreach (Entity ent in level.obstacles) {
+                bool test = DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().Entity.Shape.AsDynamicShape(), ent.Shape).Collision;
+                if (test) {
+                    GameOver();
+                }
             }
         }
 
@@ -119,6 +128,11 @@ namespace SpaceTaxi_1.StateMachine {
         public void RenderState() {
             if (!GameOverActive) {
                 level.RenderLevelObjects();
+            } else {
+                level.obstacles.RenderEntities();
+
+                //NOTE: ADD EXPLOSION ANIMATION HERE, AT PLAYER POSITION.
+
             }
         }
 
@@ -134,6 +148,15 @@ namespace SpaceTaxi_1.StateMachine {
 
         public Level ReturnLevel() {
             return this.level;
+        }
+
+        private void UpdatePhysics() {
+            eventBus.RegisterEvent(
+                GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.TimedEvent,
+                        this,
+                        "UPDATE_PHYSICS",
+                        "", ""));
         }
     }
 }
