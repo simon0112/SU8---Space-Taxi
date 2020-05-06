@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Collections.Generic;
 
@@ -36,6 +37,9 @@ namespace SpaceTaxi_1.LevelLoading {
             // Gather all the information/objects the levels needs here.
             reader.ReadFile(levelname);
 
+            string platforminfo = reader.MetaData[1].Substring(10);
+            Console.WriteLine(platforminfo);
+
             for (int i = 0; i < reader.LegendData.Count; i++) {
                 if (reader.LegendData[i] != "") {
                     LegendIndexFinder.Add(reader.LegendData[i].Substring(0,1));
@@ -48,10 +52,18 @@ namespace SpaceTaxi_1.LevelLoading {
                 for (float x = 0; x < reader.MapData[(int) y].Length; x++) {
                      if (reader.MapData[(int) y].Substring((int) x, 1) == ">") {
                         level.AddPlayer(new DIKUArcade.Entities.DynamicShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count)));
-                    } else if (reader.MapData[(int) y].Substring((int) x, 1) != " " && reader.MapData[(int) y].Substring((int) x, 1) != "^") {
-                        ImageIndex = LegendIndexFinder.IndexOf(reader.MapData[(int) y].Substring((int) x, 1));
-                        ImageName = reader.LegendData[ImageIndex].Substring(3);
-                        level.AddObstacle((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
+                    } else if (reader.MapData[(int) y].Substring((int) x, 1) != " ") {
+                        if (reader.MapData[(int) y].Substring((int) x, 1) != "^") {
+                            ImageIndex = LegendIndexFinder.IndexOf(reader.MapData[(int) y].Substring((int) x, 1));
+                            ImageName = reader.LegendData[ImageIndex].Substring(3);
+                        }
+                        if (platforminfo.Contains(reader.MapData[(int) y].Substring((int) x, 1))) {
+                            level.AddPlatform((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
+                        } else if (reader.MapData[(int) y].Substring((int) x, 1) == "^") {
+                            level.AddPortal((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "aspargus-passage1.png")));
+                        } else {
+                            level.AddObstacle((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
+                        }
                     }
                 }
             }

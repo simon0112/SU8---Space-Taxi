@@ -52,19 +52,19 @@ namespace SpaceTaxi_1.Entities {
                     Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     break;
                 case MoveDir.Left:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00040f, 0.0000f)+Gravity)*1);
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.000040f, 0.0000f)+Gravity)*1);
                     break;
                 case MoveDir.Right:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00040f, 0.0000f)+Gravity)*1);
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.000040f, 0.0000f)+Gravity)*1);
                     break;
                 case MoveDir.Up:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.0001f)+Gravity)*1);
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.00004f)+Gravity)*1);
                     break;
                 case MoveDir.LeftUp:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.0002828f, 0.0002828f)+Gravity)*1);
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00002828f, 0.00002828f)+Gravity)*1);
                     break;
                 case MoveDir.RightUp:
-                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0002828f, 0.0002828f)+Gravity)*1);
+                    Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00002828f, 0.00002828f)+Gravity)*1);
                     break;
             }
             Move();

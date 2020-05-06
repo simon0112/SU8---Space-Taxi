@@ -130,6 +130,9 @@ namespace SpaceTaxi_1.StateMachine {
                 level.RenderLevelObjects();
             } else {
                 level.obstacles.RenderEntities();
+
+                //NOTE: ADD EXPLOSION ANIMATION HERE, AT PLAYER POSITION.
+
             }
         }
 
