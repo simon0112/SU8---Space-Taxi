@@ -40,20 +40,58 @@ namespace SpaceTaxi_1.StateMachine {
             GameOverActive = true;
         }
 
+        public void resetGameOver() {
+            GameOverActive = false;
+        }
+
         public void UpdateGameLogic() {
             if (!GameOverActive) {
-                UpdatePhysics();
                 DetectCollision();
+                UpdatePhysics();
             }
         }
 
         private void DetectCollision() {
+            foreach (Entity ent in level.platforms) {
+                bool platformColl = false;
+                if (DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().Entity.Shape.AsDynamicShape(), ent.Shape).Collision) {
+                    platformColl = true;
+                    Console.WriteLine("TEST");
+                }
+                if (platformColl) {
+                    PlayerLanded();
+                }
+            }
             foreach (Entity ent in level.obstacles) {
-                bool test = DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().Entity.Shape.AsDynamicShape(), ent.Shape).Collision;
-                if (test) {
+                bool obstacleColl = DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().Entity.Shape.AsDynamicShape(), ent.Shape).Collision;
+                if (obstacleColl) {
                     GameOver();
                 }
             }
+            foreach (Entity ent in level.portal) {
+                if (DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().Entity.Shape.AsDynamicShape(), ent.Shape).Collision) {
+                    NextLevelCall();
+                }
+            }
+        }
+    
+        private void NextLevelCall() {
+            if (levelCreator.reader.MetaData[0].Contains("SHORT -N- SWEET")) {
+                Utilities.EventBus.GetBus().RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.GameStateEvent,
+                        this,
+                        "CHANGE_STATE",
+                        "LEVEL_START", "the-beach.txt"));
+            }
+        }
+        private void PlayerLanded() {
+            Utilities.EventBus.GetBus().RegisterEvent(
+                GameEventFactory<object>.CreateGameEventForAllProcessors(
+                    GameEventType.PlayerEvent,
+                    this,
+                    "PLAYER_LANDED",
+                    "", ""));
         }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
@@ -61,10 +99,10 @@ namespace SpaceTaxi_1.StateMachine {
                 if (keyValue == "KEY_ESCAPE") {
                     Utilities.EventBus.GetBus().RegisterEvent(
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
-                                GameEventType.GameStateEvent,
-                                this,
-                                "CHANGE_STATE",
-                                "GAME_PAUSED", ""));
+                            GameEventType.GameStateEvent,
+                            this,
+                            "CHANGE_STATE",
+                            "GAME_PAUSED", ""));
                 } else {
                     KeyPress(keyValue);
                 }
@@ -130,9 +168,6 @@ namespace SpaceTaxi_1.StateMachine {
                 level.RenderLevelObjects();
             } else {
                 level.obstacles.RenderEntities();
-
-                //NOTE: ADD EXPLOSION ANIMATION HERE, AT PLAYER POSITION.
-
             }
         }
 
@@ -140,6 +175,7 @@ namespace SpaceTaxi_1.StateMachine {
             level = levelCreator.CreateLevel(lvlName);
             eventBus.Subscribe(GameEventType.MovementEvent, level.ReturnPlayer());
             eventBus.Subscribe(GameEventType.TimedEvent, level.ReturnPlayer());
+            eventBus.Subscribe(GameEventType.PlayerEvent, level.ReturnPlayer());
         }
 
         public LevelCreator ReturnLevelCreator() {

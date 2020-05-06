@@ -6,5 +6,6 @@ namespace SpaceTaxi_1.Enums {
         Up,
         LeftUp,
         RightUp,
+        Crashed,
     }
 }
