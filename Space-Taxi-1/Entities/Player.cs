@@ -125,23 +125,41 @@ namespace SpaceTaxi_1.Entities {
                     case "BOOSTER_TO_LEFT":
                         value = Orientation.Left;
                         playerIsLeftOrRight(value);
+                        playerStrides = ImageStride.CreateStrides(2,
+                        Path.Combine("Assets", "Images", "Taxi_Thrust_Back.png"));
+                        imageStride = new ImageStride(80, playerStrides);
+                        this.entity.Image = this.imageStride;
                         this.AddAcceleration(new Vec2F(-0.00040f, 0.0000f), UpdatesSinceLastMovement);
                         break;
                     case "BOOSTER_TO_RIGHT":
                         value = Orientation.Right;
                         playerIsLeftOrRight(value);
+                        playerStrides = ImageStride.CreateStrides(2,
+                                Path.Combine("Assets", "Images", "Taxi_Thrust_Back_Right.png"));
+                        imageStride = new ImageStride(80, playerStrides);
+                        this.entity.Image = this.imageStride;
+
                         this.AddAcceleration(new Vec2F(0.00040f, 0.0000f), UpdatesSinceLastMovement);
                         break;
                     case "BOOSTER_UPWARDS":
-                        this.AddAcceleration(new Vec2F(0.0000f, 0.0001f), UpdatesSinceLastMovement);
+                        System.Console.WriteLine(value);
                         switch (value)
                         {
                             case Orientation.Left:
-                                this.entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom.png"));
+                                this.AddAcceleration(new Vec2F(0.0000f, 0.0001f), UpdatesSinceLastMovement);
+                                playerStrides = ImageStride.CreateStrides(2,
+                                Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back.png"));
+                                imageStride = new ImageStride(80, playerStrides);
+                                this.entity.Image = this.imageStride;
                                 break;
                             case Orientation.Right:
-                                this.entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Right.png"));
+                                this.AddAcceleration(new Vec2F(0.0000f, 0.0001f), UpdatesSinceLastMovement);
+                                playerStrides = ImageStride.CreateStrides(2,
+                                Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back_right.png"));
+                                imageStride = new ImageStride(80, playerStrides);
+                                this.entity.Image = this.imageStride;
                                 break;
+
                         }
                         break;
                     case "BOOSTER_UP_LEFT":
