@@ -93,15 +93,6 @@ namespace SpaceTaxi_1 {
             }
         }
 
-        private void DeliverUpdateAmount(int amt) {
-            eventBus.RegisterEvent(
-                GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.TimedEvent,
-                        this,
-                        "UPDATE_AMT_DELIVERY",
-                        amt.ToString(), ""));
-        }
-        
         ///<summary> register the events if one of the casses is called. <summary/>
         ///<variable name="key"> The key that is pressed</variable>
         ///<returns> void, but pushes an event to the eventBus such that every other instance can process it</returns> 
@@ -134,9 +125,6 @@ namespace SpaceTaxi_1 {
                         win.CloseWindow();
                         break;
                     }
-                    break;
-                case GameEventType.MovementEvent:
-                    DeliverUpdateAmount(gameTimer.CapturedUpdates);
                     break;
             }
         }

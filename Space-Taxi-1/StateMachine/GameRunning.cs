@@ -42,8 +42,7 @@ namespace SpaceTaxi_1.StateMachine {
 
         public void UpdateGameLogic() {
             if (!GameOverActive) {
-                level.ReturnPlayer().PhysicsEffect();
-                level.ReturnPlayer().Move();
+                UpdatePhysics();
             }
         }
 
@@ -134,6 +133,15 @@ namespace SpaceTaxi_1.StateMachine {
 
         public Level ReturnLevel() {
             return this.level;
+        }
+
+        private void UpdatePhysics() {
+            eventBus.RegisterEvent(
+                GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.TimedEvent,
+                        this,
+                        "UPDATE_PHYSICS",
+                        "", ""));
         }
     }
 }

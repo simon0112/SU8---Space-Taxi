@@ -47,7 +47,7 @@ namespace SpaceTaxi_1.Entities {
             Direction(this.Entity.Shape.AsDynamicShape().Direction + (value+Gravity)*UpdateAmt);
         }
 
-        public void PhysicsEffect() {
+        private void PhysicsEffect() {
             switch (moveDir) {
                 case MoveDir.None:
                     Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
@@ -68,6 +68,7 @@ namespace SpaceTaxi_1.Entities {
                     Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0002828f, 0.0002828f)+Gravity)*1);
                     break;
             }
+            Move();
         }
         
         ///<summary> The processEvent that is related to the player, it processes playerevents based on what the message of that event is in the eventBus <summary/>
@@ -78,8 +79,8 @@ namespace SpaceTaxi_1.Entities {
             Orientation value = Orientation.Left;
             if (eventType == GameEventType.TimedEvent) {
                 switch (gameEvent.Message) {
-                    case "UPDATE_AMT_DELIVERY":
-                        UpdatesSinceLastMovement = (int.Parse(gameEvent.Parameter1))/60;
+                    case "UPDATE_PHYSICS":
+                        PhysicsEffect();
                         break;
                 }
             } else if (eventType == GameEventType.MovementEvent) {
@@ -114,11 +115,19 @@ namespace SpaceTaxi_1.Entities {
                         this.Entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back_Right.png"));
                         break;
                     case "STOP_ACCELERATE_LEFT":
+                        if (moveDir == MoveDir.LeftUp) {
+                            moveDir = MoveDir.Up;
+                        } else {
                         moveDir = MoveDir.None;
+                        }
                         playerIsLeftOrRight(value);
                         break;
                     case "STOP_ACCELERATE_RIGHT":
+                        if (moveDir == MoveDir.RightUp) {
+                            moveDir = MoveDir.Up;
+                        } else {
                         moveDir = MoveDir.None;
+                        }
                         playerIsLeftOrRight(value);
                         break;
                     case "STOP_ACCELERATE_UP":
@@ -142,7 +151,7 @@ namespace SpaceTaxi_1.Entities {
         // the screen space. So the player stops moving if it reach one of the sides. <summary/>
         //<input> none </insput>
         //<return> void </insput> 
-        public void Move() {
+        private void Move() {
             if (Entity.Shape.Position.X > 0f && Entity.Shape.Position.X < 0.97f) {
                 Entity.Shape.Move();
             } else if (Entity.Shape.Position.X <= 0f && Entity.Shape.AsDynamicShape().Direction.X > 0f) {
