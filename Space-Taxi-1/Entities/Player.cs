@@ -45,47 +45,47 @@ namespace SpaceTaxi_1.Entities {
         private void PhysicsEffect() {
             switch (moveDir) {
                 case MoveDir.None:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.Left:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.X >= -0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.X >= -0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.000040f, 0.0000f))*1);
                     }
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.Right:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.X <= 0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.X <= 0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.000040f, 0.0000f))*1);
                     }
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.Up:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.00004f))*1);
                     }
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.LeftUp:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.X >= -0.0005f || this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.X >= -0.002f || this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00002828f, 0.00002828f))*1);
                     }
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.RightUp:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.X <= 0.0005f || this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.X <= 0.002f || this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00002828f, 0.00002828f))*1);
                     }
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.0005f) {
+                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
                         Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;

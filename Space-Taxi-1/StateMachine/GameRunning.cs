@@ -54,9 +54,11 @@ namespace SpaceTaxi_1.StateMachine {
         private void DetectCollision() {
             foreach (Entity ent in level.platforms) {
                 bool platformColl = false;
-                if (DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().Entity.Shape.AsDynamicShape(), ent.Shape).Collision) {
+                if (DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().Entity.Shape.AsDynamicShape(), ent.Shape).Collision && level.ReturnPlayer().Entity.Shape.AsDynamicShape().Direction.Y < 0.0005f && level.ReturnPlayer().Entity.Shape.AsDynamicShape().Direction.X < 0.0004f) {
                     platformColl = true;
                     Console.WriteLine("TEST");
+                } else if (DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().Entity.Shape.AsDynamicShape(), ent.Shape).Collision && (level.ReturnPlayer().Entity.Shape.AsDynamicShape().Direction.Y > 0.0005f || level.ReturnPlayer().Entity.Shape.AsDynamicShape().Direction.X > 0.0004f)) {
+                    GameOver();
                 }
                 if (platformColl) {
                     PlayerLanded();
