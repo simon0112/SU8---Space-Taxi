@@ -12,16 +12,14 @@ namespace SpaceTaxi_1.Entities {
     public class Player : IGameEventProcessor<object> {
         public Orientation orientation { get; private set; }
         public Entity entity { get; private set; }
-        private int UpdatesSinceLastMovement;
-        private Vec2F Gravity = new Vec2F(0f, -0.0000005f);
+        private Vec2F Gravity = new Vec2F(0f, -0.00001f);
         private ImageStride imageStride;
         public List<Image> playerStrides;
         private MoveDir moveDir;
-        public Entity Entity { get; private set; }
 
         ///<summary> player constructor <summary/>
         ///<variable name="shape"> The Dynamic shape that the player is, the players placement and bounds</variable>
-        ///<variable name="Entity"> The entity that the player is, makes use of the shape, and an image path to create a visible player </variable>
+        ///<variable name="entity"> The entity that the player is, makes use of the shape, and an image path to create a visible player </variable>
         ///<variable name="Orientation"> The orientation of the player, can either be left or rigtht</variable>
         ///<returns> void, but instantiates the player object </returns> 
         public Player(DynamicShape shape)
@@ -65,66 +63,65 @@ namespace SpaceTaxi_1.Entities {
         }
 
 
-        private void PhysicsEffect()
-        {
-            switch (moveDir)
-            {
+        private void PhysicsEffect() {
+            switch (moveDir) {
                 case MoveDir.None:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.Left:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.X >= -0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.000040f, 0.0000f))*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.X >= -0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00004f, 0.0000f))*1);
                     }
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.Right:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.X <= 0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.000040f, 0.0000f))*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.X <= 0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00004f, 0.0000f))*1);
                     }
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.Up:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.00004f))*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.00004f))*1);
                     }
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.LeftUp:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.X >= -0.002f || this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00002828f, 0.00002828f))*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.X >= -0.002f || this.entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00002828f, 0.00002828f))*1);
                     }
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.RightUp:
-                    if (this.Entity.Shape.AsDynamicShape().Direction.X <= 0.002f || this.Entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00002828f, 0.00002828f))*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.X <= 0.002f || this.entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00002828f, 0.00002828f))*1);
                     }
-                    if (this.Entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.Entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
                     }
                     break;
                 case MoveDir.Crashed:
                     break;
             }
+            Move();
         }
         
                        
             
-                    //<summary> this methode helps us make sure that the player is only running inside
-                    // the screen space. So the player stops moving if it reach one of the sides. <summary/>
-                    //<input> none </insput>
-                    //<return> void </insput> 
+                    ///<summary> this methode helps us make sure that the player is only running inside
+                    /// the screen space. So the player stops moving if it reach one of the sides. </summary>
+                    ///<input> none </input>
+                    ///<return> void </returns> 
                     public void Move()
                     {
                         if (entity.Shape.Position.X > 0f && entity.Shape.Position.X < 0.97f)
@@ -162,22 +159,16 @@ namespace SpaceTaxi_1.Entities {
                     ///<variable name="eventType"> The event type that is related to the specific game event in the eventBus</variable>
                     ///<variable name="gameEvent"> The game event itself </variable>
                     ///<return> void, but runs functions depending on what the event consists of </insput> 
-                    public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent)
-                    {
+                    public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
                         Orientation value = Orientation.Left;
-                        if (eventType == GameEventType.TimedEvent)
-                        {
-                            switch (gameEvent.Message)
-                            {
-                                case "UPDATE_AMT_DELIVERY":
-                                    UpdatesSinceLastMovement = (int.Parse(gameEvent.Parameter1)) / 60;
+                        if (eventType == GameEventType.TimedEvent) {
+                            switch (gameEvent.Message) {
+                                case "UPDATE_PHYSICS":
+                                    PhysicsEffect();
                                     break;
                             }
-                        }
-                        else if (eventType == GameEventType.MovementEvent)
-                        {
-                            switch (gameEvent.Message)
-                            {
+                        } else if (eventType == GameEventType.MovementEvent) {
+                            switch (gameEvent.Message) {
                                 case "BOOSTER_TO_LEFT":
                                     value = Orientation.Left;
                                     playerIsLeftOrRight(value);
@@ -185,7 +176,8 @@ namespace SpaceTaxi_1.Entities {
                                     Path.Combine("Assets", "Images", "Taxi_Thrust_Back.png"));
                                     imageStride = new ImageStride(80, playerStrides);
                                     this.entity.Image = this.imageStride;
-                                    this.AddAcceleration(new Vec2F(-0.00040f, 0.0000f), UpdatesSinceLastMovement);
+
+                                    moveDir = MoveDir.Left;
                                     break;
                                 case "BOOSTER_TO_RIGHT":
                                     value = Orientation.Right;
@@ -195,46 +187,56 @@ namespace SpaceTaxi_1.Entities {
                                     imageStride = new ImageStride(80, playerStrides);
                                     this.entity.Image = this.imageStride;
 
-                                    this.AddAcceleration(new Vec2F(0.00040f, 0.0000f), UpdatesSinceLastMovement);
+                                    moveDir = MoveDir.Right;
                                     break;
                                 case "BOOSTER_UPWARDS":
-                                    System.Console.WriteLine(value);
-                                    switch (value)
-                                    {
+                                    switch (value) {
                                         case Orientation.Left:
-                                            this.AddAcceleration(new Vec2F(0.0000f, 0.0001f), UpdatesSinceLastMovement);
                                             playerStrides = ImageStride.CreateStrides(2,
-                                            Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back.png"));
+                                            Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom.png"));
                                             imageStride = new ImageStride(80, playerStrides);
                                             this.entity.Image = this.imageStride;
                                             break;
                                         case Orientation.Right:
-                                            this.AddAcceleration(new Vec2F(0.0000f, 0.0001f), UpdatesSinceLastMovement);
                                             playerStrides = ImageStride.CreateStrides(2,
-                                            Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back_right.png"));
+                                            Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Right.png"));
                                             imageStride = new ImageStride(80, playerStrides);
                                             this.entity.Image = this.imageStride;
                                             break;
 
                                     }
+                                    moveDir = MoveDir.Up;
                                     break;
                                 case "BOOSTER_UP_LEFT":
-                                    this.AddAcceleration(new Vec2F(-0.0002828f, 0.0002828f), UpdatesSinceLastMovement);
+                                    moveDir = MoveDir.LeftUp;
+                                    playerStrides = ImageStride.CreateStrides(2,
+                                            Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back.png"));
+                                            imageStride = new ImageStride(80, playerStrides);
                                     break;
                                 case "BOOSTER_UP_RIGHT":
-                                    this.AddAcceleration(new Vec2F(0.0002828f, 0.0002828f), UpdatesSinceLastMovement);
+                                    moveDir = MoveDir.RightUp;
+                                    playerStrides = ImageStride.CreateStrides(2,
+                                            Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Back_Right.png"));
+                                            imageStride = new ImageStride(80, playerStrides);
                                     break;
                                 case "STOP_ACCELERATE_LEFT":
-                                    this.AddAcceleration(new Vec2F(0f, 0f), UpdatesSinceLastMovement);
+                                    moveDir = MoveDir.None;
                                     playerIsLeftOrRight(value);
                                     break;
                                 case "STOP_ACCELERATE_RIGHT":
-                                    this.AddAcceleration(new Vec2F(0f, 0f), UpdatesSinceLastMovement);
+                                    moveDir = MoveDir.None;
                                     playerIsLeftOrRight(value);
                                     break;
                                 case "STOP_ACCELERATE_UP":
-                                    this.AddAcceleration(new Vec2F(0f, 0f), UpdatesSinceLastMovement);
+                                    moveDir = MoveDir.None;
                                     playerIsLeftOrRight(value);
+                                    break;
+                            }
+                        } else if (eventType == GameEventType.PlayerEvent) {
+                            switch (gameEvent.Message) {
+                                case "PLAYER_LANDED":
+                                    moveDir = MoveDir.Crashed;
+                                    Direction(new Vec2F(0f,0f));
                                     break;
                             }
                         }
