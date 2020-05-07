@@ -51,26 +51,31 @@ namespace SpaceTaxi_1.StateMachine {
         }
 
         private void DetectCollision() {
+            var playerShape = level.ReturnPlayer().entity.Shape.AsDynamicShape();
             foreach (Entity ent in level.platforms) {
                 bool platformColl = false;
-                if (DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().entity.Shape.AsDynamicShape(), ent.Shape).Collision && level.ReturnPlayer().entity.Shape.AsDynamicShape().Direction.Y < 0.0005f && level.ReturnPlayer().entity.Shape.AsDynamicShape().Direction.X < 0.0004f) {
-                    platformColl = true;
-                    Console.WriteLine("TEST");
-                } else if (DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().entity.Shape.AsDynamicShape(), ent.Shape).Collision && (level.ReturnPlayer().entity.Shape.AsDynamicShape().Direction.Y > 0.0005f || level.ReturnPlayer().entity.Shape.AsDynamicShape().Direction.X > 0.0004f)) {
-                    GameOver();
+                if ((ent.Shape.Position.X-playerShape.Position.X > -0.33f && ent.Shape.Position.X-playerShape.Position.X < 0.33f) && (ent.Shape.Position.Y-playerShape.Position.Y > -0.33f && ent.Shape.Position.Y-playerShape.Position.Y < 0.33f)) {
+                    if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision && playerShape.Direction.Y < 0.0005f && playerShape.Direction.X < 0.0004f) {
+                        platformColl = true;
+                        Console.WriteLine("TEST");
+                    } else if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision && (playerShape.Direction.Y > 0.0005f || playerShape.Direction.X > 0.0004f)) {
+                        GameOver();
+                    }
                 }
                 if (platformColl) {
                     PlayerLanded();
                 }
             }
             foreach (Entity ent in level.obstacles) {
-                bool obstacleColl = DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().entity.Shape.AsDynamicShape(), ent.Shape).Collision;
-                if (obstacleColl) {
-                    GameOver();
+                if ((ent.Shape.Position.X-playerShape.Position.X > -0.33f && ent.Shape.Position.X-playerShape.Position.X < 0.33f) && (ent.Shape.Position.Y-playerShape.Position.Y > -0.33f && ent.Shape.Position.Y-playerShape.Position.Y < 0.33f)) {
+                    bool obstacleColl = DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision;
+                    if (obstacleColl) {
+                        GameOver();
+                    }
                 }
             }
             foreach (Entity ent in level.portal) {
-                if (DIKUArcade.Physics.CollisionDetection.Aabb(level.ReturnPlayer().entity.Shape.AsDynamicShape(), ent.Shape).Collision) {
+                if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision) {
                     NextLevelCall();
                 }
             }
