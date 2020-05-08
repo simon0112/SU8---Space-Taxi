@@ -35,12 +35,18 @@ namespace SpaceTaxi_1.LevelLoading {
         public void RenderLevelObjects() {
             // all rendering here
             obstacles.RenderEntities();
+<<<<<<< HEAD
 
             Player.entity.RenderEntity();
 
             platforms.RenderEntities();
             portal.RenderEntities();
             Player.Entity.RenderEntity();
+=======
+            platforms.RenderEntities();
+            portal.RenderEntities();
+            Player.entity.RenderEntity();
+>>>>>>> a37adb9ea6beecd68d634add44c7a882cf4ac555
         }
 
         ///<summary> render the logic in the level objects <summary/>
