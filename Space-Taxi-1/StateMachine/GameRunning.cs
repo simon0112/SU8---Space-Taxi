@@ -210,7 +210,8 @@ namespace SpaceTaxi_1.StateMachine {
         public Level ReturnLevel() {
             return this.level;
         }
-
+        ///<summary>Used to make a call to the eventbus that the physics should be updated</summary>
+        ///<returns>void</returns>
         private void UpdatePhysics() {
             eventBus.RegisterEvent(
                 GameEventFactory<object>.CreateGameEventForAllProcessors(

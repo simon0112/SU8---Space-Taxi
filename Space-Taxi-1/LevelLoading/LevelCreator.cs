@@ -18,7 +18,8 @@ namespace SpaceTaxi_1.LevelLoading {
             reader = new Reader();
             LegendIndexFinder = new List<string>();
         }
-
+        ///<summary>Deletes all data related to the levelcreator, such that a new one can be created without having to close and open the whole program</summary>
+        ///<returns>void</returns>
         public void EmptyData() {
             reader.EmptyData();
             this.LegendIndexFinder.RemoveRange(0, LegendIndexFinder.Count);

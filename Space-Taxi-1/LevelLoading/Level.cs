@@ -17,7 +17,8 @@ namespace SpaceTaxi_1.LevelLoading {
             platforms = new EntityContainer();
             portal = new EntityContainer();
         }
-
+        ///<summary>Deletes all data related to the level, such that a new one can be created without having to close and open the whole program</summary>
+        ///<returns>void</returns>
         public void EmptyData() {
             obstacles.ClearContainer();
             platforms.ClearContainer();
