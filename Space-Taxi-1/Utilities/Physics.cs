@@ -1,0 +1,64 @@
+using System;
+using System.IO;
+using System.Reflection;
+using DIKUArcade.Entities;
+using SpaceTaxi_1.Enums;
+using DIKUArcade.Math;
+
+namespace SpaceTaxi_1.Utilities {
+    public class Physics {
+        private Vec2F Gravity = new Vec2F(0f, -0.00001f);
+        public void PhysicsEffect(Entity ent, MoveDir moveDir) {
+            switch (moveDir) {
+                case MoveDir.None:
+                    if (ent.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
+                    break;
+                case MoveDir.Left:
+                    if (ent.Shape.AsDynamicShape().Direction.X >= -0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00004f, 0.0000f))*1);
+                    }
+                    if (ent.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
+                    break;
+                case MoveDir.Right:
+                    if (ent.Shape.AsDynamicShape().Direction.X <= 0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (new Vec2F(0.00004f, 0.0000f))*1);
+                    }
+                    if (ent.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
+                    break;
+                case MoveDir.Up:
+                    if (ent.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.00004f))*1);
+                    }
+                    if (ent.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
+                    break;
+                case MoveDir.LeftUp:
+                    if (ent.Shape.AsDynamicShape().Direction.X >= -0.002f || ent.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00002828f, 0.00002828f))*1);
+                    }
+                    if (ent.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
+                    break;
+                case MoveDir.RightUp:
+                    if (ent.Shape.AsDynamicShape().Direction.X <= 0.002f || ent.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (new Vec2F(0.00002828f, 0.00002828f))*1);
+                    }
+                    if (ent.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                    }
+                    break;
+                case MoveDir.Crashed:
+                    break;
+            }
+            ent.Shape.Move();
+        }
+    }
+}

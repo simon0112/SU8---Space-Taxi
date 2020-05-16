@@ -5,6 +5,7 @@ using DIKUArcade.Math;
 using System.IO;
 using SpaceTaxi_1.Enums;
 using System.Collections.Generic;
+using SpaceTaxi_1.Utilities;
 
 
 
@@ -12,10 +13,12 @@ namespace SpaceTaxi_1.Entities {
     public class Player : IGameEventProcessor<object> {
         public Orientation orientation { get; private set; }
         public Entity entity { get; private set; }
-        private Vec2F Gravity = new Vec2F(0f, -0.00001f);
         private ImageStride imageStride;
         public List<Image> playerStrides;
         private MoveDir moveDir;
+        private Physics physics = new Physics();
+
+        
 
         ///<summary> player constructor <summary/>
         ///<variable name="shape"> The Dynamic shape that the player is, the players placement and bounds</variable>
@@ -58,56 +61,7 @@ namespace SpaceTaxi_1.Entities {
         ///<var name="moveDir">The direction the player is set to move in</var>
         ///<returns>void</returns>
         private void PhysicsEffect() {
-            switch (moveDir) {
-                case MoveDir.None:
-                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
-                    }
-                    break;
-                case MoveDir.Left:
-                    if (this.entity.Shape.AsDynamicShape().Direction.X >= -0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00004f, 0.0000f))*1);
-                    }
-                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
-                    }
-                    break;
-                case MoveDir.Right:
-                    if (this.entity.Shape.AsDynamicShape().Direction.X <= 0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00004f, 0.0000f))*1);
-                    }
-                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
-                    }
-                    break;
-                case MoveDir.Up:
-                    if (this.entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.00004f))*1);
-                    }
-                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
-                    }
-                    break;
-                case MoveDir.LeftUp:
-                    if (this.entity.Shape.AsDynamicShape().Direction.X >= -0.002f || this.entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00002828f, 0.00002828f))*1);
-                    }
-                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
-                    }
-                    break;
-                case MoveDir.RightUp:
-                    if (this.entity.Shape.AsDynamicShape().Direction.X <= 0.002f || this.entity.Shape.AsDynamicShape().Direction.Y <= 0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (new Vec2F(0.00002828f, 0.00002828f))*1);
-                    }
-                    if (this.entity.Shape.AsDynamicShape().Direction.Y >= -0.002f) {
-                        Direction(this.entity.Shape.AsDynamicShape().Direction + (Gravity)*1);
-                    }
-                    break;
-                case MoveDir.Crashed:
-                    break;
-            }
-            Move();
+            physics.PhysicsEffect(entity, this.moveDir);
         }
         
                        
