@@ -2,6 +2,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using System.IO;
 using SpaceTaxi_1.Entities;
+using System.Collections.Generic;
 
 namespace SpaceTaxi_1.LevelLoading {
     public class Level {
@@ -9,6 +10,7 @@ namespace SpaceTaxi_1.LevelLoading {
         public EntityContainer obstacles {private set; get;}
         public EntityContainer platforms {private set; get;}
         public EntityContainer portal {private set; get;}
+        public List<Customer> Customers {private set; get;}
         private Player Player;
 
         // constructor of level class.
@@ -16,6 +18,7 @@ namespace SpaceTaxi_1.LevelLoading {
             obstacles = new EntityContainer();
             platforms = new EntityContainer();
             portal = new EntityContainer();
+            Customers = new List<Customer>();
         }
         ///<summary>Deletes all data related to the level, such that a new one can be created without having to close and open the whole program</summary>
         ///<returns>void</returns>
@@ -55,6 +58,10 @@ namespace SpaceTaxi_1.LevelLoading {
 
         public void AddPortal(StationaryShape obs, Image img) {
             portal.AddStationaryEntity(obs, img);
+        }
+
+        public void AddCustomer(Customer cust) {
+            Customers.Add(cust);
         }
 
         ///<summary> adds the player if needed <summary/>
