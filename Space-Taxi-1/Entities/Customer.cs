@@ -18,14 +18,16 @@ namespace SpaceTaxi_1.Entities {
         private string goalPlatform;
         private int TimeLimit;
         private int pointWorth;
+        public bool visible = false;
 
-        public Customer(string name, int spwnTme, string start, string end, int Limit, int worth) {
+        public Customer(string name, int spwnTme, string start, string end, int Limit, int worth, StationaryShape shape) {
             Name = name;
             SpawnTime = spwnTme;
             startPlatform = start;
             goalPlatform = end;
             TimeLimit = Limit;
             pointWorth = worth;
+            entity = new Entity(shape, new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "CustomerStandRight.png")));
         }
 
 

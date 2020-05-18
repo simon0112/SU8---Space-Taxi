@@ -21,6 +21,7 @@ namespace SpaceTaxi_1.StateMachine {
         private bool GameOverActive = false;
         private GameEventBus<object> eventBus;
         private bool UpIsActive = false;
+        private List<Customer> customers;
 
         public static GameRunning GetInstance() {
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
@@ -34,6 +35,8 @@ namespace SpaceTaxi_1.StateMachine {
             levelCreator = new LevelCreator();
             
             eventBus = Utilities.EventBus.GetBus();
+
+            customers = new List<Customer>();
         }
         ///<summary>Used to find out if the game has ended</summary>
         ///<var name="GameOverActive">The variable later checked to determine if the game is over, boolean.</var>
@@ -195,6 +198,9 @@ namespace SpaceTaxi_1.StateMachine {
         ///<returns>void</returns>
         public void CreateLevel(string lvlName) {
             level = levelCreator.CreateLevel(lvlName);
+
+            
+
             eventBus.Subscribe(GameEventType.MovementEvent, level.ReturnPlayer());
             eventBus.Subscribe(GameEventType.TimedEvent, level.ReturnPlayer());
             eventBus.Subscribe(GameEventType.PlayerEvent, level.ReturnPlayer());

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using SpaceTaxi_1.Entities;
 
 namespace SpaceTaxi_1.LevelLoading {
     public class LevelCreator {
@@ -60,6 +61,13 @@ namespace SpaceTaxi_1.LevelLoading {
                         }
                         if (platforminfo.Contains(reader.MapData[(int) y].Substring((int) x, 1))) {
                             level.AddPlatform((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
+                            if (platforminfo.Contains(reader.MapData[(int) y].Substring((int) x-4, 1))) {
+                                var indexOfCustomer = reader.CustomerData.IndexOf(reader.MapData[(int) y].Substring((int) x-4, 1));
+
+                                var tempcustomer = reader.CustomerData[indexOfCustomer].Split(' ');
+
+                                level.AddCustomer(new Customer(tempcustomer[1], int.Parse(tempcustomer[2]), tempcustomer[3], tempcustomer[4], int.Parse(tempcustomer[5]), int.Parse(tempcustomer[6]), new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))));
+                            }
                         } else if (reader.MapData[(int) y].Substring((int) x, 1) == "^") {
                             level.AddPortal((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "aspargus-passage1.png")));
                         } else {

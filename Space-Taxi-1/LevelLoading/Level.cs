@@ -42,6 +42,11 @@ namespace SpaceTaxi_1.LevelLoading {
             platforms.RenderEntities();
             portal.RenderEntities();
             Player.entity.RenderEntity();
+            foreach (Customer cust in Customers) {
+                if (cust.visible == true) {
+                    cust.entity.RenderEntity();
+                }
+            }
         }
 
         ///<summary> render the logic in the level objects <summary/>
