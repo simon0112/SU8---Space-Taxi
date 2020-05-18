@@ -22,6 +22,7 @@ namespace SpaceTaxi_1.StateMachine {
         private GameEventBus<object> eventBus;
         private bool UpIsActive = false;
         private List<Customer> customers;
+        private int customerTimer;
 
         public static GameRunning GetInstance() {
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
@@ -37,6 +38,8 @@ namespace SpaceTaxi_1.StateMachine {
             eventBus = Utilities.EventBus.GetBus();
 
             customers = new List<Customer>();
+
+            customerTimer = 0;
         }
         ///<summary>Used to find out if the game has ended</summary>
         ///<var name="GameOverActive">The variable later checked to determine if the game is over, boolean.</var>
@@ -57,6 +60,8 @@ namespace SpaceTaxi_1.StateMachine {
             if (!GameOverActive) {
                 DetectCollision();
                 UpdatePhysics();
+                customerTimer++;
+                CustomerAppear();
             }
         }
         ///<summary>Detects collision between entities and the player</summary>
@@ -115,6 +120,14 @@ namespace SpaceTaxi_1.StateMachine {
                     this,
                     "PLAYER_LANDED",
                     "", ""));
+        }
+
+        public void CustomerAppear() {
+            foreach (Customer cust in level.Customers) {
+                if ((customerTimer/60) >= cust.SpawnTime) {
+                    cust.visible = true;
+                }
+            }
         }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {

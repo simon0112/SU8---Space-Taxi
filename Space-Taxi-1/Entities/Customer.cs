@@ -13,7 +13,7 @@ namespace SpaceTaxi_1.Entities {
         
         public Entity entity { get; private set; }
         private string Name;
-        private int SpawnTime;
+        public int SpawnTime;
         private string startPlatform;
         private string goalPlatform;
         private int TimeLimit;
@@ -28,6 +28,7 @@ namespace SpaceTaxi_1.Entities {
             TimeLimit = Limit;
             pointWorth = worth;
             entity = new Entity(shape, new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "CustomerStandRight.png")));
+            Utilities.EventBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
         }
 
 
@@ -35,7 +36,17 @@ namespace SpaceTaxi_1.Entities {
 
 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
+            if (eventType == GameEventType.TimedEvent) {
+                switch (gameEvent.Message) {
 
+                }
+            } else if (eventType == GameEventType.MovementEvent) {
+                switch (gameEvent.Message) {
+
+                }
+            } else if (eventType == GameEventType.PlayerEvent) {
+
+            }
         }
     }
 }

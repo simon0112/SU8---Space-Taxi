@@ -17,6 +17,7 @@ namespace SpaceTaxi_1.Entities {
         public List<Image> playerStrides;
         private MoveDir moveDir;
         private Physics physics = new Physics();
+        private Customer customerOnBoard;
 
         
 
@@ -30,6 +31,8 @@ namespace SpaceTaxi_1.Entities {
             entity = new Entity(shape, new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None_Right.png")));
             orientation = new Orientation();
             moveDir = MoveDir.None;
+
+            customerOnBoard = null;
         }
         ///<summary> sets the Orientation value to either left or right, depending on what image we want to be displayed. <summary/>
         ///<variable name="value"> A value using the Orientation enumeration.</variable>
