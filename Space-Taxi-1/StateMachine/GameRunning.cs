@@ -77,12 +77,12 @@ namespace SpaceTaxi_1.StateMachine {
                     NextLevelCall();
                 }
             }
-            foreach (Entity ent in level.platforms) {
+            foreach (Platform plat in level.platforms) {
                 bool platformColl = false;
-                if ((ent.Shape.Position.X-playerShape.Position.X > -0.1f && ent.Shape.Position.X-playerShape.Position.X < 0.1f) && (ent.Shape.Position.Y-playerShape.Position.Y > -0.1f && ent.Shape.Position.Y-playerShape.Position.Y < 0.1f)) {
-                    if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision && playerShape.Direction.Y >= -0.001f && (playerShape.Direction.X <= 0.001f && playerShape.Direction.X >= -0.001f)) {
+                if ((plat.entity.Shape.Position.X-playerShape.Position.X > -0.1f && plat.entity.Shape.Position.X-playerShape.Position.X < 0.1f) && (plat.entity.Shape.Position.Y-playerShape.Position.Y > -0.1f && plat.entity.Shape.Position.Y-playerShape.Position.Y < 0.1f)) {
+                    if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision && playerShape.Direction.Y >= -0.001f && (playerShape.Direction.X <= 0.001f && playerShape.Direction.X >= -0.001f)) {
                         platformColl = true;
-                    } else if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision && (playerShape.Direction.Y < -0.001f || (playerShape.Direction.X > 0.001f && playerShape.Direction.X < -0.001f))) {
+                    } else if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision && (playerShape.Direction.Y < -0.001f || (playerShape.Direction.X > 0.001f && playerShape.Direction.X < -0.001f))) {
                         GameOver();
                     }
                 }

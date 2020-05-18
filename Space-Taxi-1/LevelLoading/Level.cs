@@ -8,7 +8,7 @@ namespace SpaceTaxi_1.LevelLoading {
     public class Level {
         // Add fields as needed
         public EntityContainer obstacles {private set; get;}
-        public EntityContainer platforms {private set; get;}
+        public List<Platform> platforms {private set; get;}
         public EntityContainer portal {private set; get;}
         public List<Customer> Customers {private set; get;}
         private Player Player;
@@ -16,7 +16,7 @@ namespace SpaceTaxi_1.LevelLoading {
         // constructor of level class.
         public Level() {
             obstacles = new EntityContainer();
-            platforms = new EntityContainer();
+            platforms = new List<Platform>();
             portal = new EntityContainer();
             Customers = new List<Customer>();
         }
