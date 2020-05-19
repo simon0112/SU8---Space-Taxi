@@ -60,13 +60,13 @@ namespace SpaceTaxi_1.LevelLoading {
                             ImageName = reader.LegendData[ImageIndex].Substring(3);
                         }
                         if (platforminfo.Contains(reader.MapData[(int) y].Substring((int) x, 1))) {
-                            level.AddPlatform((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
-                            if (!(platforminfo.Contains(reader.MapData[(int) y].Substring((int) x-3, 1))) && reader.CustomerData.Contains(reader.MapData[(int) y].Substring((int) x-3, 1)) {
+                            level.AddPlatform((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), reader.MapData[(int) y].Substring((int) x, 1), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
+                            if (!(platforminfo.Contains(reader.MapData[(int) y].Substring((int) x-3, 1)))) {
                                 var indexOfCustomer = reader.CustomerData.IndexOf(reader.MapData[(int) y].Substring((int) x-3, 1));
 
                                 var tempcustomer = reader.CustomerData[indexOfCustomer+1].Split(' ');
 
-                                level.AddCustomer(new Customer(tempcustomer[1], int.Parse(tempcustomer[2]), tempcustomer[3], tempcustomer[4], int.Parse(tempcustomer[5]), int.Parse(tempcustomer[6]), new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),(((y-1)/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))));
+                                level.AddCustomer(new Customer(tempcustomer[1], int.Parse(tempcustomer[2]), tempcustomer[3], tempcustomer[4], int.Parse(tempcustomer[5]), int.Parse(tempcustomer[6]), new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),(((y-1)/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), reader.MapData[(int) y].Substring((int) x, 1));
                             }
                         } else if (reader.MapData[(int) y].Substring((int) x, 1) == "^") {
                             level.AddPortal((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "aspargus-passage1.png")));

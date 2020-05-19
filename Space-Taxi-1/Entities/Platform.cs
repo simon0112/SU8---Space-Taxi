@@ -14,9 +14,9 @@ namespace SpaceTaxi_1.Entities {
         
         public Entity entity { get; private set; }
 
-        public Platform(string name, StationaryShape shape) {
+        public Platform(string name, StationaryShape shape, Image img) {
             Name = name;
-            entity = new Entity(shape, new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "CustomerStandRight.png")));
+            entity = new Entity(shape, img);
         }
 
 

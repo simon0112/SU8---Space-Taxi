@@ -14,7 +14,7 @@ namespace SpaceTaxi_1.Entities {
         public Entity entity { get; private set; }
         private string Name;
         public int SpawnTime;
-        private string startPlatform;
+        public string startPlatform;
         private string goalPlatform;
         private int TimeLimit;
         private int pointWorth;

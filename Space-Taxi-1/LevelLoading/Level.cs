@@ -24,8 +24,9 @@ namespace SpaceTaxi_1.LevelLoading {
         ///<returns>void</returns>
         public void EmptyData() {
             obstacles.ClearContainer();
-            platforms.ClearContainer();
+            platforms.RemoveRange(0, platforms.Count);
             portal.ClearContainer();
+            Customers.RemoveRange(0,Customers.Count);
         }
 
         ///<summary> updates the level logic <summary/>
@@ -39,7 +40,9 @@ namespace SpaceTaxi_1.LevelLoading {
         public void RenderLevelObjects() {
             // all rendering here
             obstacles.RenderEntities();
-            platforms.RenderEntities();
+            foreach (Platform plat in platforms) {
+                plat.entity.RenderEntity();
+            }
             portal.RenderEntities();
             Player.entity.RenderEntity();
             foreach (Customer cust in Customers) {
@@ -57,16 +60,18 @@ namespace SpaceTaxi_1.LevelLoading {
             obstacles.AddStationaryEntity(obs, img);
         }
 
-        public void AddPlatform(StationaryShape obs, Image img) {
-            platforms.AddStationaryEntity(obs, img);
+        public void AddPlatform(StationaryShape shape, string name, Image img) {
+            platforms.Add(new Platform(name, shape, img));
         }
 
         public void AddPortal(StationaryShape obs, Image img) {
             portal.AddStationaryEntity(obs, img);
         }
 
-        public void AddCustomer(Customer cust) {
-            Customers.Add(cust);
+        public void AddCustomer(Customer cust, string platName) {
+            if (platName == cust.startPlatform) {
+                Customers.Add(cust);
+            }
         }
 
         ///<summary> adds the player if needed <summary/>

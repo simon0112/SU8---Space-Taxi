@@ -78,16 +78,12 @@ namespace SpaceTaxi_1.StateMachine {
                 }
             }
             foreach (Platform plat in level.platforms) {
-                bool platformColl = false;
                 if ((plat.entity.Shape.Position.X-playerShape.Position.X > -0.1f && plat.entity.Shape.Position.X-playerShape.Position.X < 0.1f) && (plat.entity.Shape.Position.Y-playerShape.Position.Y > -0.1f && plat.entity.Shape.Position.Y-playerShape.Position.Y < 0.1f)) {
                     if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision && playerShape.Direction.Y >= -0.001f && (playerShape.Direction.X <= 0.001f && playerShape.Direction.X >= -0.001f)) {
-                        platformColl = true;
+                        PlayerLanded();
                     } else if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision && (playerShape.Direction.Y < -0.001f || (playerShape.Direction.X > 0.001f && playerShape.Direction.X < -0.001f))) {
                         GameOver();
                     }
-                }
-                if (platformColl) {
-                    PlayerLanded();
                 }
             }
             foreach (Entity ent in level.obstacles) {
