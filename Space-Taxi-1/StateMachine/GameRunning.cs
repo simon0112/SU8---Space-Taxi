@@ -22,7 +22,7 @@ namespace SpaceTaxi_1.StateMachine {
         private GameEventBus<object> eventBus;
         private bool UpIsActive = false;
         private List<Customer> customers;
-        private int customerTimer;
+        public int customerTimer;
 
         public static GameRunning GetInstance() {
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
@@ -120,7 +120,7 @@ namespace SpaceTaxi_1.StateMachine {
 
         public void CustomerAppear() {
             foreach (Customer cust in level.Customers) {
-                if ((customerTimer/60) >= cust.SpawnTime) {
+                if ((customerTimer/60) >= cust.SpawnTime && cust.visible == false) {
                     cust.visible = true;
                 }
             }

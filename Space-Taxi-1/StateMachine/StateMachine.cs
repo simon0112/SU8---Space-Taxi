@@ -47,6 +47,7 @@ namespace SpaceTaxi_1.StateMachine {
                             if (GameRunning.GetInstance().ReturnLevel() != null) {
                                 GameRunning.GetInstance().ReturnLevelCreator().EmptyData();
                                 GameRunning.GetInstance().ReturnLevel().EmptyData();
+                                GameRunning.GetInstance().customerTimer = 0;
                                 GameRunning.GetInstance().resetGameOver();
                             }
                             GameRunning.GetInstance().CreateLevel(gameEvent.Parameter2);

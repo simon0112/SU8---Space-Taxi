@@ -26,6 +26,9 @@ namespace SpaceTaxi_1.LevelLoading {
             obstacles.ClearContainer();
             platforms.RemoveRange(0, platforms.Count);
             portal.ClearContainer();
+            foreach (Customer cust in Customers) {
+                cust.visible = false;
+            }
             Customers.RemoveRange(0,Customers.Count);
         }
 
@@ -69,7 +72,7 @@ namespace SpaceTaxi_1.LevelLoading {
         }
 
         public void AddCustomer(Customer cust, string platName) {
-            if (platName == cust.startPlatform) {
+            if (cust.startPlatform.Contains(platName)) {
                 Customers.Add(cust);
             }
         }
