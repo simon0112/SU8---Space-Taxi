@@ -65,7 +65,7 @@ namespace SpaceTaxi_1.LevelLoading {
                         }
                         if (platforminfo.Contains(reader.MapData[(int) y].Substring((int) x, 1))) {
                             level.AddPlatform((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), reader.MapData[(int) y].Substring((int) x, 1), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
-                            if (!(platforminfo.Contains(reader.MapData[(int) y].Substring((int) x-3, 1)))) {
+                            if (!(platforminfo.Contains(reader.MapData[(int) y].Substring((int) x-3, 1))) && platforminfo.Contains(reader.MapData[(int) y].Substring((int) x+8, 1))) {
                                 foreach (String str in reader.CustomerData) {
 
                                     var tempcustomer = str.Split(' ');
