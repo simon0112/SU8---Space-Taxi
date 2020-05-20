@@ -80,8 +80,8 @@ namespace SpaceTaxi_1.LevelLoading {
         ///<summary> adds the player if needed <summary/>
         ///<variable name="play">new player instance </variable>
         ///<returns> void </returns> 
-        public void AddPlayer(DynamicShape play) {
-            Player = new Player(play);
+        public void AddPlayer(DynamicShape play, Customer cust) {
+            Player = new Player(play, cust);
         }
         ///<summary> returns the player <summary/>
         ///<returns> Player </returns> 

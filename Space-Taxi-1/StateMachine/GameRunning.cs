@@ -94,6 +94,12 @@ namespace SpaceTaxi_1.StateMachine {
                     }
                 }
             }
+            foreach (Customer cust in level.Customers) {
+                if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, cust.entity.Shape).Collision && cust.visible == true) {
+                    cust.visible = false;
+                    level.ReturnPlayer().AddCustomer(cust);
+                }
+            } 
         }
         ///<summary>Used to make the game continue to the next level</summary>
         ///<returns>void</returns>
@@ -120,7 +126,7 @@ namespace SpaceTaxi_1.StateMachine {
 
         public void CustomerAppear() {
             foreach (Customer cust in level.Customers) {
-                if ((customerTimer/60) >= cust.SpawnTime && cust.visible == false) {
+                if ((customerTimer/60) >= cust.SpawnTime && cust.visible == false && level.ReturnPlayer().customerOnBoard == null) {
                     cust.visible = true;
                 }
             }

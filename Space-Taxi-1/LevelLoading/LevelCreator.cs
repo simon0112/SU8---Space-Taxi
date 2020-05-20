@@ -10,6 +10,7 @@ namespace SpaceTaxi_1.LevelLoading {
         public Reader reader {private set; get;}
         private string ImageName;
         private int ImageIndex;
+        private Customer PrevLvlCustomer;
 
         ///<summary> the instantiator of the LevelCreator object</summary>
         ///<variable name="reader"> the reader that reads the files that save how the levels look</variable>
@@ -21,11 +22,14 @@ namespace SpaceTaxi_1.LevelLoading {
         }
         ///<summary>Deletes all data related to the levelcreator, such that a new one can be created without having to close and open the whole program</summary>
         ///<returns>void</returns>
-        public void EmptyData() {
+        public void EmptyData(Customer cust) {
             reader.EmptyData();
             this.LegendIndexFinder.RemoveRange(0, LegendIndexFinder.Count);
             this.ImageIndex = 0;
             this.ImageName = "";
+            if (cust != null) {
+                PrevLvlCustomer = cust;
+            }
         }
         
         ///<summary> Creates and instantiates the level object, also adds obstacles and the player to the level<summary/>
@@ -53,7 +57,7 @@ namespace SpaceTaxi_1.LevelLoading {
             for (float y = 0; y < reader.MapData.Count; y++) {
                 for (float x = 0; x < reader.MapData[(int) y].Length; x++) {
                      if (reader.MapData[(int) y].Substring((int) x, 1) == ">") {
-                        level.AddPlayer(new DIKUArcade.Entities.DynamicShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count)));
+                        level.AddPlayer(new DIKUArcade.Entities.DynamicShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count)), PrevLvlCustomer);
                     } else if (reader.MapData[(int) y].Substring((int) x, 1) != " ") {
                         if (reader.MapData[(int) y].Substring((int) x, 1) != "^") {
                             ImageIndex = LegendIndexFinder.IndexOf(reader.MapData[(int) y].Substring((int) x, 1));

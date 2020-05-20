@@ -44,8 +44,13 @@ namespace SpaceTaxi_1.StateMachine {
                             SwitchState(GameStateType.MainMenu);
                             break;
                         case "LEVEL_START":
-                            if (GameRunning.GetInstance().ReturnLevel() != null) {
-                                GameRunning.GetInstance().ReturnLevelCreator().EmptyData();
+                            if (ActiveState == LevelSelect.GetInstance() && GameRunning.GetInstance().ReturnLevel() != null) {
+                                GameRunning.GetInstance().ReturnLevelCreator().EmptyData(null);
+                                GameRunning.GetInstance().ReturnLevel().EmptyData();
+                                GameRunning.GetInstance().customerTimer = 0;
+                                GameRunning.GetInstance().resetGameOver();
+                            } else if (GameRunning.GetInstance().ReturnLevel() != null) {
+                                GameRunning.GetInstance().ReturnLevelCreator().EmptyData(GameRunning.GetInstance().ReturnLevel().ReturnPlayer().customerOnBoard);
                                 GameRunning.GetInstance().ReturnLevel().EmptyData();
                                 GameRunning.GetInstance().customerTimer = 0;
                                 GameRunning.GetInstance().resetGameOver();
