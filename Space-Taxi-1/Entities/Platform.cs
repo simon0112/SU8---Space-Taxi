@@ -10,7 +10,7 @@ using SpaceTaxi_1.Utilities;
 
 namespace SpaceTaxi_1.Entities {
     public class Platform : IGameEventProcessor<object> {
-        private string Name;
+        public string Name;
         
         public Entity entity { get; private set; }
 

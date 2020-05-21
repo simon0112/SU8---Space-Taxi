@@ -22,8 +22,10 @@ namespace SpaceTaxi_1.StateMachine {
         private GameEventBus<object> eventBus;
         private bool UpIsActive = false;
         private List<Customer> customers;
+        private List<Customer> CustomerHasBeenPickedUp;
         public int customerStartTimer;
         public int customerTimer;
+        private Score pointText;
 
         public static GameRunning GetInstance() {
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
@@ -39,10 +41,12 @@ namespace SpaceTaxi_1.StateMachine {
             eventBus = Utilities.EventBus.GetBus();
 
             customers = new List<Customer>();
+            CustomerHasBeenPickedUp = new List<Customer>();
 
             customerStartTimer = 0;
 
             customerTimer = 0;
+            pointText = new Score(new Vec2F(0.8f, -0.15f), new Vec2F(0.3f, 0.3f));
         }
         ///<summary>Used to find out if the game has ended</summary>
         ///<var name="GameOverActive">The variable later checked to determine if the game is over, boolean.</var>
@@ -82,13 +86,25 @@ namespace SpaceTaxi_1.StateMachine {
             foreach (Entity ent in level.portal) {
                 if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision) {
                     NextLevelCall();
+                } else if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision && level.ReturnPlayer().customerOnBoard.goalPlatform == "Portal") {
+                    pointText.AddPoint(level.ReturnPlayer().customerOnBoard.pointWorth);
+                    level.ReturnPlayer().customerOnBoard = null;
                 }
             }
             foreach (Platform plat in level.platforms) {
+                var PlayerSpeedCheck = playerShape.Direction.Y >= -0.001f && (playerShape.Direction.X <= 0.001f && playerShape.Direction.X >= -0.001f);
                 if ((plat.entity.Shape.Position.X-playerShape.Position.X > -0.1f && plat.entity.Shape.Position.X-playerShape.Position.X < 0.1f) && (plat.entity.Shape.Position.Y-playerShape.Position.Y > -0.1f && plat.entity.Shape.Position.Y-playerShape.Position.Y < 0.1f)) {
-                    if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision && playerShape.Direction.Y >= -0.001f && (playerShape.Direction.X <= 0.001f && playerShape.Direction.X >= -0.001f)) {
-                        PlayerLanded();
-                    } else if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision && (playerShape.Direction.Y < -0.001f || (playerShape.Direction.X > 0.001f && playerShape.Direction.X < -0.001f))) {
+                    if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision && PlayerSpeedCheck) {
+                        if (level.ReturnPlayer().customerOnBoard != null && level.ReturnPlayer().customerOnBoard.TimeLimit > (customerTimer/60)) {
+                            if (plat.Name == level.ReturnPlayer().customerOnBoard.goalPlatform) {
+                                pointText.AddPoint(level.ReturnPlayer().customerOnBoard.pointWorth);
+                                level.ReturnPlayer().customerOnBoard = null;
+                                customerTimer = 0;
+                            }
+                        } else {
+                            PlayerLanded();
+                        }
+                    } else if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision && !PlayerSpeedCheck) {
                         GameOver();
                     }
                 }
@@ -105,9 +121,11 @@ namespace SpaceTaxi_1.StateMachine {
                 if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, cust.entity.Shape).Collision && cust.visible == true) {
                     cust.visible = false;
                     level.ReturnPlayer().AddCustomer(cust);
+                    CustomerHasBeenPickedUp.Add(cust);
                 }
             } 
         }
+        
         ///<summary>Used to make the game continue to the next level</summary>
         ///<returns>void</returns>
         private void NextLevelCall() {
@@ -133,7 +151,7 @@ namespace SpaceTaxi_1.StateMachine {
 
         public void CustomerAppear() {
             foreach (Customer cust in level.Customers) {
-                if ((customerStartTimer/60) >= cust.SpawnTime && cust.visible == false && level.ReturnPlayer().customerOnBoard == null) {
+                if ((customerStartTimer/60) >= cust.SpawnTime && cust.visible == false && !CustomerHasBeenPickedUp.Contains(cust)) {
                     cust.visible = true;
                 }
             }
@@ -222,6 +240,7 @@ namespace SpaceTaxi_1.StateMachine {
             } else {
                 level.obstacles.RenderEntities();
             }
+            pointText.RenderScore();
         }
         ///<summary>Used to create the level when the level is supposed to start, also subscribes the palyer to the eventbus</summary>
         ///<var name="level">the level that is created by the levelcreator</var>
