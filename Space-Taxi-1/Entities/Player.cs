@@ -67,6 +67,9 @@ namespace SpaceTaxi_1.Entities {
             physics.PhysicsEffect(entity, this.moveDir);
         }
         
+        ///<summary>Adds a customer to the taxa, such that the taxa 'carries' a customer</summary>
+        ///<var name="cust"> The customer that is to be added to the taxa</var>
+        ///<returns>void</returns>
         public void AddCustomer(Customer cust) {
             customerOnBoard = cust;
         }                       

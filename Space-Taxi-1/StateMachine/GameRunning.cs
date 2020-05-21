@@ -78,7 +78,7 @@ namespace SpaceTaxi_1.StateMachine {
         ///<summary>Detects collision between entities and the player</summary>
         ///<var name="playerShape">the dynamic shape that is the player</var>
         ///<var name="ent">the specific shape in the given list of entities</var>
-        ///<var name="platformColl">a boolean value denoting whether the the player has collided with a platform</var>
+        ///<var name="PlayerSpeedCheck">a boolean value denoting whether the the player is within the speed requirements needed to land</var>
         ///<var name="obstacleColl">a boolean value denoting whether the the player has collided with an obstacle</var>
         ///<returns>void</returns>
         private void DetectCollision() {
@@ -151,6 +151,9 @@ namespace SpaceTaxi_1.StateMachine {
                     "", ""));
         }
 
+        ///<summary> Used to find out if the level has been going on for enough time for the customer to become visible,
+        /// also checks if a customer already has been picked up once, to make sure multiples of the same customer doesn't appear when a customer</summary>
+        ///<returns>void</returns>
         public void CustomerAppear() {
             foreach (Customer cust in level.Customers) {
                 if ((customerStartTimer/60) >= cust.SpawnTime && cust.visible == false && !CustomerHasBeenPickedUp.Contains(cust)) {
@@ -159,6 +162,8 @@ namespace SpaceTaxi_1.StateMachine {
             }
         }
 
+        ///<summary> Used to find out if the customer on the taxi has 'run out of patience' if it has, then a game-over happens</summary>
+        ///<returns>void</returns>
         public void customerPatienceLeft() {
             if ((customerTimer/60) >= level.ReturnPlayer().customerOnBoard.TimeLimit) {
                 level.ReturnPlayer().customerOnBoard = null;
@@ -249,8 +254,6 @@ namespace SpaceTaxi_1.StateMachine {
         ///<returns>void</returns>
         public void CreateLevel(string lvlName) {
             level = levelCreator.CreateLevel(lvlName);
-
-            
 
             eventBus.Subscribe(GameEventType.MovementEvent, level.ReturnPlayer());
             eventBus.Subscribe(GameEventType.TimedEvent, level.ReturnPlayer());

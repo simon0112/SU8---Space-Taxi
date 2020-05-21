@@ -39,10 +39,6 @@ namespace SpaceTaxi_1.Entities {
             Utilities.EventBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
         }
 
-
-
-
-
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
         }
     }

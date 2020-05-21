@@ -8,6 +8,11 @@ using DIKUArcade.Math;
 namespace SpaceTaxi_1.Utilities {
     public class Physics {
         private Vec2F Gravity = new Vec2F(0f, -0.00001f);
+
+        ///<summary> Affects an entity with different physics depending on which way the entity is set to move </summary>
+        ///<var name="ent"> The entity that is to be affected by the physics</var>
+        ///<var name="moveDir"> The direction the entity should move</var>
+        ///<returns> void </returns>
         public void PhysicsEffect(Entity ent, MoveDir moveDir) {
             switch (moveDir) {
                 case MoveDir.None:

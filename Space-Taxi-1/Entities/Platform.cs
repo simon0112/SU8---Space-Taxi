@@ -19,10 +19,6 @@ namespace SpaceTaxi_1.Entities {
             entity = new Entity(shape, img);
         }
 
-
-
-
-
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
         }
     }

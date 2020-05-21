@@ -18,6 +18,10 @@ public class Score
       score = 0;
       display = new Text(score.ToString(), position, extent);
    }
+
+   ///<summary> Adds points to the score-board</summary>
+   ///<var name="PointWorth"> The amount of points that are to be added to the score</var>
+   ///<returns> void </returns>
    public void AddPoint(int PointWorth)
    {
       score += PointWorth;
