@@ -10,6 +10,9 @@ namespace SpaceTaxi_1.StateMachine {
             Utilities.EventBus.GetBus().Subscribe(GameEventType.InputEvent, this);
             ActiveState = MainMenu.GetInstance();
         }
+        ///<summary>Switches state depending on which stateType it is fed</summary>
+        ///<var name="stateType">A GameStateType used to define what game state that should be switched to</var>
+        ///<returns>void</returns>
         public void SwitchState(GameStateType stateType) {
              switch (stateType) {
                  case GameStateType.GameRunning:
@@ -41,9 +44,16 @@ namespace SpaceTaxi_1.StateMachine {
                             SwitchState(GameStateType.MainMenu);
                             break;
                         case "LEVEL_START":
-                            if (GameRunning.GetInstance().ReturnLevel() != null) {
-                                GameRunning.GetInstance().ReturnLevelCreator().EmptyData();
+                            if (ActiveState == LevelSelect.GetInstance() && GameRunning.GetInstance().ReturnLevel() != null) {
+                                GameRunning.GetInstance().ReturnLevelCreator().EmptyData(null);
                                 GameRunning.GetInstance().ReturnLevel().EmptyData();
+                                GameRunning.GetInstance().customerTimer = 0;
+                                GameRunning.GetInstance().customerStartTimer = 0;
+                                GameRunning.GetInstance().resetGameOver();
+                            } else if (GameRunning.GetInstance().ReturnLevel() != null) {
+                                GameRunning.GetInstance().ReturnLevelCreator().EmptyData(GameRunning.GetInstance().ReturnLevel().ReturnPlayer().customerOnBoard);
+                                GameRunning.GetInstance().ReturnLevel().EmptyData();
+                                GameRunning.GetInstance().customerStartTimer = 0;
                                 GameRunning.GetInstance().resetGameOver();
                             }
                             GameRunning.GetInstance().CreateLevel(gameEvent.Parameter2);

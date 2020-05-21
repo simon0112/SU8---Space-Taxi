@@ -26,7 +26,7 @@ namespace UnitTests
         public void Setup()
         {
             DIKUArcade.Window.CreateOpenGLContext();
-            player = new Player(new DIKUArcade.Entities.DynamicShape(new Vec2F(0.5f,0.5f),new Vec2F(0.1f,0.1f)));
+            player = new Player(new DIKUArcade.Entities.DynamicShape(new Vec2F(0.5f,0.5f),new Vec2F(0.1f,0.1f)), null);
             levelcreator = new LevelCreator();
             level = levelcreator.CreateLevel("short-n-sweet.txt");
             
