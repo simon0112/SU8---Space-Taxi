@@ -88,10 +88,10 @@ namespace SpaceTaxi_1.StateMachine {
                     if (level.ReturnPlayer().customerOnBoard.goalPlatform == "Portal" && level.ReturnPlayer().customerOnBoard.TimeLimit > (customerTimer/60)) {
                         pointText.AddPoint(level.ReturnPlayer().customerOnBoard.pointWorth);
                         level.ReturnPlayer().customerOnBoard = null;
-                    }
-                } else {
-                    NextLevelCall();
-                }    
+                    } else {
+                        NextLevelCall();
+                    }    
+                }
             }
             foreach (Platform plat in level.platforms) {
                 var PlayerSpeedCheck = playerShape.Direction.Y >= -0.001f && (playerShape.Direction.X <= 0.001f && playerShape.Direction.X >= -0.001f);
