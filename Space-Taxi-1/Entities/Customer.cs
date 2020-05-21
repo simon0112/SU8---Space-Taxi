@@ -16,7 +16,7 @@ namespace SpaceTaxi_1.Entities {
         public int SpawnTime;
         public string startPlatform;
         private string goalPlatform;
-        private int TimeLimit;
+        public int TimeLimit;
         private int pointWorth;
         public bool visible = false;
 
