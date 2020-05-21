@@ -55,7 +55,7 @@ namespace SpaceTaxi_1.LevelLoading {
             }
         }
 
-        ///<summary> render the logic in the level objects <summary/>
+        ///<summary>  adds an obstacle to the collective data of the level <summary/>
         ///<variable name="obs"> StationaryShape object </variable>
         ///<variable name="img"> image object</variable>
         ///<returns> void </returns> 
@@ -63,14 +63,28 @@ namespace SpaceTaxi_1.LevelLoading {
             obstacles.AddStationaryEntity(obs, img);
         }
 
+        ///<summary> adds a platform to the collective data of the level</summary>
+        ///<var name="shape"> The shape that is to be added </var>
+        ///<var name="name"> The name of the platform that is being added, this is used for collision detection and customer placement</var>
+        ///<var name="img"> The image that the platform is rendered with</var>
+        ///<returns> void </returns>
         public void AddPlatform(StationaryShape shape, string name, Image img) {
             platforms.Add(new Platform(name, shape, img));
         }
 
+        ///<summary> adds a portal to the collective data of the level</summary>
+        ///<var name="shape"> The shape that is to be added </var>
+        ///<var name="img"> The image that the portal is rendered with</var>
+        ///<returns> void </returns>
         public void AddPortal(StationaryShape obs, Image img) {
             portal.AddStationaryEntity(obs, img);
         }
 
+        ///<summary> adds a customer to the collective data of the level</summary>
+        ///<var name="cust"> the customer object that is to be added </var>
+        ///<var name="platName"> the name of the platform that the customer is being put on top of,
+        ///used to find out if the customer is being placed at the right platform</var>
+        ///<returns> void </returns>
         public void AddCustomer(Customer cust, string platName) {
             if (cust.startPlatform.Contains(platName)) {
                 Customers.Add(cust);
@@ -79,6 +93,7 @@ namespace SpaceTaxi_1.LevelLoading {
 
         ///<summary> adds the player if needed <summary/>
         ///<variable name="play">new player instance </variable>
+        ///<variable name="cust">The customer in the taxi, if there is one</variable>
         ///<returns> void </returns> 
         public void AddPlayer(DynamicShape play, Customer cust) {
             Player = new Player(play, cust);
