@@ -24,17 +24,6 @@ namespace SpaceTaxi_1.Entities {
 
 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
-            if (eventType == GameEventType.TimedEvent) {
-                switch (gameEvent.Message) {
-
-                }
-            } else if (eventType == GameEventType.MovementEvent) {
-                switch (gameEvent.Message) {
-
-                }
-            } else if (eventType == GameEventType.PlayerEvent) {
-
-            }
         }
     }
 }
