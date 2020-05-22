@@ -17,44 +17,54 @@ namespace SpaceTaxi_1.Utilities {
             switch (moveDir) {
                 case MoveDir.None:
                     if (ent.Shape.AsDynamicShape().Direction.Y >= -0.005f) {
-                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction
+                        + (Gravity)*1);
                     }
                     break;
                 case MoveDir.Left:
                     if (ent.Shape.AsDynamicShape().Direction.X >= -0.005f) {
-                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (new Vec2F(-0.00005f, 0.0000f))*1);
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction 
+                        + (new Vec2F(-0.00005f, 0.0000f))*1);
                     }
                     if (ent.Shape.AsDynamicShape().Direction.Y >= -0.005f) {
-                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction 
+                        + (Gravity)*1);
                     }
                     break;
                 case MoveDir.Right:
                     if (ent.Shape.AsDynamicShape().Direction.X <= 0.005f) {
-                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (new Vec2F(0.00005f, 0.0000f))*1);
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction 
+                        + (new Vec2F(0.00005f, 0.0000f))*1);
                     }
                     if (ent.Shape.AsDynamicShape().Direction.Y >= -0.005f) {
-                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction
+                        + (Gravity)*1);
                     }
                     break;
                 case MoveDir.Up:
                     if (ent.Shape.AsDynamicShape().Direction.Y <= 0.005f) {
-                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (new Vec2F(0.0000f, 0.00005f))*1);
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction
+                        + (new Vec2F(0.0000f, 0.00005f))*1);
                     }
                     if (ent.Shape.AsDynamicShape().Direction.Y >= -0.005f) {
-                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction
+                        + (Gravity)*1);
                     }
                     break;
                 case MoveDir.LeftUp:
                     if (ent.Shape.AsDynamicShape().Direction.X >= -0.005f || ent.Shape.AsDynamicShape().Direction.Y <= 0.005f) {
-                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (new Vec2F(-0.000070711f, 0.000070711f))*1);
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction
+                        + (new Vec2F(-0.000070711f, 0.000070711f))*1);
                     }
                     if (ent.Shape.AsDynamicShape().Direction.Y >= -0.005f) {
-                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction
+                        + (Gravity)*1);
                     }
                     break;
                 case MoveDir.RightUp:
                     if (ent.Shape.AsDynamicShape().Direction.X <= 0.005f || ent.Shape.AsDynamicShape().Direction.Y <= 0.005f) {
-                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (new Vec2F(0.000070711f, 0.000070711f))*1);
+                        ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction
+                        + (new Vec2F(0.000070711f, 0.000070711f))*1);
                     }
                     if (ent.Shape.AsDynamicShape().Direction.Y >= -0.005f) {
                         ent.Shape.AsDynamicShape().ChangeDirection(ent.Shape.AsDynamicShape().Direction + (Gravity)*1);

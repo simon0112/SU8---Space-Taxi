@@ -6,10 +6,10 @@ namespace SpaceTaxi_1.Utilities {
     public class Utils {
         // makes sure that the path can be found on the computer.
 
-        //<summary> finds base path. And makes sure the the path is 
-        //accesseble on the computer <summary/>
-        //<input> type = string, name = filename </insput>
-        //<return> static string </insput> 
+        ///<summary> finds base path. And makes sure the the path is 
+        ///accessable on the computer <summary/>
+        ///<var name="filename"> the filename that the path to is being searched for</var>
+        ///<return> static string </insput> 
        public static string GetLevelFilePath(string filename) {
             
            DirectoryInfo dir = new DirectoryInfo(Path.GetDirectoryName(

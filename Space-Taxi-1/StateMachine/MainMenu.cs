@@ -15,10 +15,14 @@ namespace SpaceTaxi_1.StateMachine {
             return MainMenu.instance ?? (MainMenu.instance = new MainMenu());
         }
 
+//      Part of the IGameState interface, so has to be within the class, even if it isn't used.
+//      Is not used since there is no core gameloop to run while in the main menu
         public void GameLoop() {
 
         }
 
+        ///<summary>Initializes the 'Main-Menu' state of the game</summary>
+        ///<returns> void </returns>
         public void InitializeGameState() {
             menuButtons = new Text[2] {new Text("- New Game", new Vec2F(0.35f,0.5f), new Vec2F(0.5f,0.4f)), new Text("- Quit", new Vec2F(0.35f,0.0f), new Vec2F(0.5f,0.4f))};
 
@@ -27,6 +31,8 @@ namespace SpaceTaxi_1.StateMachine {
             new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
         }
 
+//      Once again, part of the IGameState interface, has to be in the class, even if not used.
+//      Is not used since there is no game logic to update
         public void UpdateGameLogic() {
 
         }

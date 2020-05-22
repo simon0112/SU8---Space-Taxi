@@ -15,10 +15,14 @@ namespace SpaceTaxi_1.StateMachine {
             return LevelSelect.instance ?? (LevelSelect.instance = new LevelSelect());
         }
 
+//      Part of the IGameState interface, so has to be within the class, even if it isn't used.
+//      Is not used since there is no core gameloop to run while the level is being selected
         public void GameLoop() {
 
         }
 
+        ///<summary>Initializes the 'Level-selector' state of the game</summary>
+        ///<returns> void </returns>
         public void InitializeGameState() {
             Levels = new Text[3] {new Text("Short-n-sweet", new Vec2F(0.35f,0.75f), new Vec2F(0.5f,0.25f)), new Text("the-beach", new Vec2F(0.35f,0.5f), new Vec2F(0.5f,0.25f)), new Text("Back to Menu", new Vec2F(0.35f,0.25f),new Vec2F(0.5f,0.25f))};
 
@@ -27,12 +31,13 @@ namespace SpaceTaxi_1.StateMachine {
                 new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
         }
 
+//      Once again, part of the IGameState interface, has to be in the class, even if not used.
+//      Is not used since there is no game logic to update
         public void UpdateGameLogic() {
 
         }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
-            
             if (keyAction == "KEY_PRESS") {
                 if (keyValue == "KEY_UP" && ActiveLevelButton != 0) {
                     ActiveLevelButton--;

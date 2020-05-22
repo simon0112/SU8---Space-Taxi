@@ -56,16 +56,33 @@ namespace SpaceTaxi_1.LevelLoading {
 
             for (float y = 0; y < reader.MapData.Count; y++) {
                 for (float x = 0; x < reader.MapData[(int) y].Length; x++) {
-                     if (reader.MapData[(int) y].Substring((int) x, 1) == ">") {
-                        level.AddPlayer(new DIKUArcade.Entities.DynamicShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count)), PrevLvlCustomer);
+                    if (reader.MapData[(int) y].Substring((int) x, 1) == ">") {
+                        // Adds the player if the character denoting it is encountered.
+                        level.AddPlayer(new DIKUArcade.Entities.DynamicShape((x/reader.MapData[(int) y].Length),
+                            ((y/-(float) reader.MapData.Count)+(1-( 1f/(float) reader.MapData.Count))),
+                            (1f/(float) reader.MapData[(int) y].Length),
+                            (1f/(float) reader.MapData.Count)), PrevLvlCustomer);
                     } else if (reader.MapData[(int) y].Substring((int) x, 1) != " ") {
+                        //if it isn't a player-character, then it checks that the character reached isn't a " "
+                        //after this it checks which character is read, and does different things depending.
                         if (reader.MapData[(int) y].Substring((int) x, 1) != "^") {
+                            //As long as it isn't the character denoting a portal, the character is searched for in the LegendIndexFinder
+                            //and the equivalent image-name is also found
                             ImageIndex = LegendIndexFinder.IndexOf(reader.MapData[(int) y].Substring((int) x, 1));
                             ImageName = reader.LegendData[ImageIndex].Substring(3);
                         }
                         if (platforminfo.Contains(reader.MapData[(int) y].Substring((int) x, 1))) {
-                            level.AddPlatform((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), reader.MapData[(int) y].Substring((int) x, 1), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
-                            if (!(platforminfo.Contains(reader.MapData[(int) y].Substring((int) x-3, 1))) && platforminfo.Contains(reader.MapData[(int) y].Substring((int) x+8, 1))) {
+                            //if the character is within the list of characters denoting a portal
+                            //a platform object is created and stored in the platform data
+                            level.AddPlatform((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),
+                                ((y/-(float) reader.MapData.Count)+(1-( 1f/(float) reader.MapData.Count))),
+                                (1f/(float) reader.MapData[(int) y].Length),
+                                (1f/(float) reader.MapData.Count))), reader.MapData[(int) y].Substring((int) x, 1),
+                                new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
+                            if (!(platforminfo.Contains(reader.MapData[(int) y].Substring((int) x-3, 1))) 
+                            && platforminfo.Contains(reader.MapData[(int) y].Substring((int) x+8, 1))) {
+                                //this if statement is used to limit the placement of customer-objects.
+                                //If this were not in place, then there would be one customer-object on top of each platform object.
                                 foreach (String str in reader.CustomerData) {
 
                                     var tempcustomer = str.Split(' ');
@@ -74,8 +91,10 @@ namespace SpaceTaxi_1.LevelLoading {
                                 }
                             }
                         } else if (reader.MapData[(int) y].Substring((int) x, 1) == "^") {
+                            //adds a portal to the correct list of data if the corresponding character is reached.
                             level.AddPortal((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "aspargus-passage1.png")));
                         } else {
+                            //Lastly adds any object that isn't a platform, space, or portal to the list of obstacles.
                             level.AddObstacle((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
                         }
                     }

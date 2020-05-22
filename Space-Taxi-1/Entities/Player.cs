@@ -27,36 +27,32 @@ namespace SpaceTaxi_1.Entities {
         ///<variable name="Orientation"> The orientation of the player, can either be left or rigtht</variable>
         ///<returns> void, but instantiates the player object </returns> 
         public Player(DynamicShape shape, Customer cust) {
-
             entity = new Entity(shape, new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None_Right.png")));
             orientation = new Orientation();
             moveDir = MoveDir.None;
-
             customerOnBoard = cust;
         }
+
         ///<summary> sets the Orientation value to either left or right, depending on what image we want to be displayed. <summary/>
         ///<variable name="value"> A value using the Orientation enumeration.</variable>
         ///<return> void, but changes values of the player object </returns> 
-        public void playerIsLeftOrRight(Orientation value)
-        {
-            if (value == Orientation.Left)
-            {
+        public void playerIsLeftOrRight(Orientation value) {
+            if (value == Orientation.Left) {
                 this.entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None.png"));
                 this.orientation = Orientation.Left;
 
             }
-            else if (value == Orientation.Right)
-            {
+            else if (value == Orientation.Right) {
                 this.entity.Image = new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "Taxi_Thrust_None_Right.png"));
                 this.orientation = Orientation.Right;
             }
         }
-        //<summary> this methode is choosing what direction the player is moving in,
-        // depending on the key pressed. <summary/>
-        //<input> type = Vec2f, name = dir </insput>
-        //<return> void </insput> 
-        private void Direction(Vec2F dir)
-        {
+
+        ///<summary> this method is for changing the direction the player is moving in,
+        /// depending on the key pressed. </summary>
+        ///<var name="dir"> The direction that the player is supposed to move</var>
+        ///<return> void </insput> 
+        private void Direction(Vec2F dir) {
             entity.Shape.AsDynamicShape().ChangeDirection(dir);
         }
 
@@ -108,7 +104,8 @@ namespace SpaceTaxi_1.Entities {
             }
         }
 
-        ///<summary> The processEvent that is related to the player, it processes playerevents based on what the message of that event is in the eventBus <summary/>
+        ///<summary> The processEvent that is related to the player
+        /// it processes player-events based on what the message of that event is in the eventBus <summary/>
         ///<variable name="eventType"> The event type that is related to the specific game event in the eventBus</variable>
         ///<variable name="gameEvent"> The game event itself </variable>
         ///<return> void, but runs functions depending on what the event consists of </insput> 
@@ -126,7 +123,7 @@ namespace SpaceTaxi_1.Entities {
                         value = Orientation.Left;
                         playerIsLeftOrRight(value);
                         playerStrides = ImageStride.CreateStrides(2,
-                        Path.Combine("Assets", "Images", "Taxi_Thrust_Back.png"));
+                            Path.Combine("Assets", "Images", "Taxi_Thrust_Back.png"));
                         imageStride = new ImageStride(80, playerStrides);
                         this.entity.Image = this.imageStride;
 
@@ -136,7 +133,7 @@ namespace SpaceTaxi_1.Entities {
                         value = Orientation.Right;
                         playerIsLeftOrRight(value);
                         playerStrides = ImageStride.CreateStrides(2,
-                                Path.Combine("Assets", "Images", "Taxi_Thrust_Back_Right.png"));
+                            Path.Combine("Assets", "Images", "Taxi_Thrust_Back_Right.png"));
                         imageStride = new ImageStride(80, playerStrides);
                         this.entity.Image = this.imageStride;
 
@@ -146,13 +143,13 @@ namespace SpaceTaxi_1.Entities {
                         switch (value) {
                             case Orientation.Left:
                                 playerStrides = ImageStride.CreateStrides(2,
-                                Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom.png"));
+                                    Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom.png"));
                                 imageStride = new ImageStride(80, playerStrides);
                                 this.entity.Image = this.imageStride;
                                 break;
                             case Orientation.Right:
                                 playerStrides = ImageStride.CreateStrides(2,
-                                Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Right.png"));
+                                    Path.Combine("Assets", "Images", "Taxi_Thrust_Bottom_Right.png"));
                                 imageStride = new ImageStride(80, playerStrides);
                                 this.entity.Image = this.imageStride;
                                 break;
@@ -189,7 +186,7 @@ namespace SpaceTaxi_1.Entities {
                 switch (gameEvent.Message) {
                     case "PLAYER_LANDED":
                         moveDir = MoveDir.Crashed;
-                        Direction(new Vec2F(0f,0f));
+                        Direction(new Vec2F(0f, 0f));
                         break;
                 }
             }

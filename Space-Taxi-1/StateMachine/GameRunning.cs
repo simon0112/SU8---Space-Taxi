@@ -31,10 +31,14 @@ namespace SpaceTaxi_1.StateMachine {
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
         }
 
+//      Part of the IGameState interface, so has to be within the class, even if it isn't used.
+//      Is not used since the core game-loop is run within the 'Game' class
         public void GameLoop() {
 
         }
 
+        ///<summary>Initializes the 'running' state of the game</summary>
+        ///<returns> void </returns>
         public void InitializeGameState() {
             levelCreator = new LevelCreator();
             
@@ -48,18 +52,21 @@ namespace SpaceTaxi_1.StateMachine {
             customerTimer = 0;
             pointText = new Score(new Vec2F(0.8f, -0.15f), new Vec2F(0.3f, 0.3f));
         }
+
         ///<summary>Used to find out if the game has ended</summary>
         ///<var name="GameOverActive">The variable later checked to determine if the game is over, boolean.</var>
         ///<returns>void</returns>
         public void GameOver() {
             GameOverActive = true;
         }
+
         ///<summary>Resets the flag for if the game is over, such that a new game can be started without closing and opening the program</summary>
         ///<var name="GameOverActive">The variable later checked to determine if the game is over, boolean.</var>
         ///<returns>void</returns>
         public void resetGameOver() {
             GameOverActive = false;
         }
+
         ///<summary>Updates all logic (collision and physics) when called</summary>
         ///<var name="GameOverActive">Checks if the game is over, if it isn't, continues into the if statement</var>
         ///<returns>void</returns>
@@ -75,6 +82,7 @@ namespace SpaceTaxi_1.StateMachine {
                 CustomerAppear();
             }
         }
+
         ///<summary>Detects collision between entities and the player</summary>
         ///<var name="playerShape">the dynamic shape that is the player</var>
         ///<var name="ent">the specific shape in the given list of entities</var>
@@ -85,42 +93,73 @@ namespace SpaceTaxi_1.StateMachine {
             var playerShape = level.ReturnPlayer().entity.Shape.AsDynamicShape();
             foreach (Entity ent in level.portal) {
                 if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision) {
-                    if (level.ReturnPlayer().customerOnBoard.goalPlatform == "Portal" && level.ReturnPlayer().customerOnBoard.TimeLimit > (customerTimer/60)) {
+                    if (level.ReturnPlayer().customerOnBoard.goalPlatform == "Portal"
+                    && level.ReturnPlayer().customerOnBoard.TimeLimit > (customerTimer/60)) {
+                        //checks on collision with a portal, if the customer has the goal-platform of "Portal"
+                        //or in other words, it is the last customer in this implementation of the game.
                         pointText.AddPoint(level.ReturnPlayer().customerOnBoard.pointWorth);
                         level.ReturnPlayer().customerOnBoard = null;
                     } else {
+                        //if it isn't, then the player will go to the next level without issue.
                         NextLevelCall();
                     }    
                 }
             }
             foreach (Platform plat in level.platforms) {
-                var PlayerSpeedCheck = playerShape.Direction.Y >= -0.001f && (playerShape.Direction.X <= 0.001f && playerShape.Direction.X >= -0.001f);
-                if ((plat.entity.Shape.Position.X-playerShape.Position.X > -0.1f && plat.entity.Shape.Position.X-playerShape.Position.X < 0.1f) && (plat.entity.Shape.Position.Y-playerShape.Position.Y > -0.1f && plat.entity.Shape.Position.Y-playerShape.Position.Y < 0.1f)) {
-                    if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision && PlayerSpeedCheck) {
-                        if (level.ReturnPlayer().customerOnBoard != null && level.ReturnPlayer().customerOnBoard.TimeLimit > (customerTimer/60)) {
+                bool PlayerSpeedCheck = playerShape.Direction.Y >= -0.001f 
+                && (playerShape.Direction.X <= 0.001f
+                && playerShape.Direction.X >= -0.001f);
+                //Above is a boolean value containing whether the player is within the speed
+                //limitations to be able to land
+
+                if ((plat.entity.Shape.Position.X-playerShape.Position.X > -0.1f
+                && plat.entity.Shape.Position.X-playerShape.Position.X < 0.1f)
+                && (plat.entity.Shape.Position.Y-playerShape.Position.Y > -0.1f
+                && plat.entity.Shape.Position.Y-playerShape.Position.Y < 0.1f)) {
+                    //Above if statement is the distance-limiter, it is to avoid every single entity (upwards of 200) doesn't
+                    //get checked for collision at each game-update
+                    if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision 
+                    && PlayerSpeedCheck) {
+                        //on collision with a platform
+                        if (level.ReturnPlayer().customerOnBoard != null
+                        && level.ReturnPlayer().customerOnBoard.TimeLimit > (customerTimer/60)) {
+                            //checks if the collision happens within the customers alotted time-limit.
                             if (plat.Name == level.ReturnPlayer().customerOnBoard.goalPlatform) {
+                                //if that is the case, checks it is the goal-platform of the customer,
+                                //if it is, then points are added to the score, and the overall timer
+                                //used to denote time spent inside the taxi by the customer, is reset.
                                 pointText.AddPoint(level.ReturnPlayer().customerOnBoard.pointWorth);
                                 level.ReturnPlayer().customerOnBoard = null;
                                 customerTimer = 0;
                             }
                         } else {
+                            //if there is no customer onboard or it is outside the time-limit, then the player simply lands
                             PlayerLanded();
                         }
-                    } else if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision && !PlayerSpeedCheck) {
+                    } else if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, plat.entity.Shape).Collision
+                    && !PlayerSpeedCheck) {
+                        //if the speed-check fails, then the user experiences a game-over.
                         GameOver();
                     }
                 }
             }
             foreach (Entity ent in level.obstacles) {
-                if ((ent.Shape.Position.X-playerShape.Position.X > -0.1f && ent.Shape.Position.X-playerShape.Position.X < 0.1f) && (ent.Shape.Position.Y-playerShape.Position.Y > -0.1f && ent.Shape.Position.Y-playerShape.Position.Y < 0.1f)) {
+                if ((ent.Shape.Position.X-playerShape.Position.X > -0.1f
+                && ent.Shape.Position.X-playerShape.Position.X < 0.1f)
+                && (ent.Shape.Position.Y-playerShape.Position.Y > -0.1f
+                && ent.Shape.Position.Y-playerShape.Position.Y < 0.1f)) {
+                //once again, a distance limiter.
                     bool obstacleColl = DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision;
                     if (obstacleColl) {
+                        //If a collision between an obstacle and the player is detected, the user experiences a game-overs
                         GameOver();
                     }
                 }
             }
             foreach (Customer cust in level.Customers) {
-                if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, cust.entity.Shape).Collision && cust.visible == true) {
+                if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, cust.entity.Shape).Collision
+                && cust.visible == true) {
+                    //if the customer is visible, he 'boards' the taxi and becomes invisible
                     cust.visible = false;
                     level.ReturnPlayer().AddCustomer(cust);
                     CustomerHasBeenPickedUp.Add(cust);
@@ -140,6 +179,7 @@ namespace SpaceTaxi_1.StateMachine {
                         "LEVEL_START", "the-beach.txt"));
             }
         }
+
         ///<summary>Used to send a message when the player has landed on platform</summary>
         ///<returns>void</returns>
         private void PlayerLanded() {
@@ -156,7 +196,9 @@ namespace SpaceTaxi_1.StateMachine {
         ///<returns>void</returns>
         public void CustomerAppear() {
             foreach (Customer cust in level.Customers) {
-                if ((customerStartTimer/60) >= cust.SpawnTime && cust.visible == false && !CustomerHasBeenPickedUp.Contains(cust)) {
+                if ((customerStartTimer/60) >= cust.SpawnTime
+                && cust.visible == false
+                && !CustomerHasBeenPickedUp.Contains(cust)) {
                     cust.visible = true;
                 }
             }
@@ -221,6 +263,7 @@ namespace SpaceTaxi_1.StateMachine {
                 break;
             }
         }
+
         public void KeyRelease(string key) {
             switch (key) {
             case "KEY_LEFT":
@@ -241,6 +284,7 @@ namespace SpaceTaxi_1.StateMachine {
                 break;
             }
         }
+
         public void RenderState() {
             if (!GameOverActive) {
                 level.RenderLevelObjects();
@@ -249,6 +293,7 @@ namespace SpaceTaxi_1.StateMachine {
             }
             pointText.RenderScore();
         }
+
         ///<summary>Used to create the level when the level is supposed to start, also subscribes the palyer to the eventbus</summary>
         ///<var name="level">the level that is created by the levelcreator</var>
         ///<returns>void</returns>
@@ -259,16 +304,19 @@ namespace SpaceTaxi_1.StateMachine {
             eventBus.Subscribe(GameEventType.TimedEvent, level.ReturnPlayer());
             eventBus.Subscribe(GameEventType.PlayerEvent, level.ReturnPlayer());
         }
+
         ///<summary>Returns the active levelcreator</summary>
         ///<returns>void</returns>
         public LevelCreator ReturnLevelCreator() {
             return this.levelCreator;
         }
+
         ///<summary>Returns the active level</summary>
         ///<returns>void</returns>
         public Level ReturnLevel() {
             return this.level;
         }
+        
         ///<summary>Used to make a call to the eventbus that the physics should be updated</summary>
         ///<returns>void</returns>
         private void UpdatePhysics() {

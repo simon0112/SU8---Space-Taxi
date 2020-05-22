@@ -20,6 +20,7 @@ namespace SpaceTaxi_1.LevelLoading {
             portal = new EntityContainer();
             Customers = new List<Customer>();
         }
+
         ///<summary>Deletes all data related to the level, such that a new one can be created without having to close and open the whole program</summary>
         ///<returns>void</returns>
         public void EmptyData() {
@@ -30,12 +31,6 @@ namespace SpaceTaxi_1.LevelLoading {
                 cust.visible = false;
             }
             Customers.RemoveRange(0,Customers.Count);
-        }
-
-        ///<summary> updates the level logic <summary/>
-        ///<returns> void </returns> 
-        public void UpdateLevelLogic() {
-           // all update logic here
         }
 
         ///<summary> render the logic in the level objects <summary/>
@@ -98,6 +93,7 @@ namespace SpaceTaxi_1.LevelLoading {
         public void AddPlayer(DynamicShape play, Customer cust) {
             Player = new Player(play, cust);
         }
+        
         ///<summary> returns the player <summary/>
         ///<returns> Player </returns> 
         public Player ReturnPlayer() {

@@ -10,6 +10,7 @@ namespace SpaceTaxi_1.StateMachine {
             Utilities.EventBus.GetBus().Subscribe(GameEventType.InputEvent, this);
             ActiveState = MainMenu.GetInstance();
         }
+
         ///<summary>Switches state depending on which stateType it is fed</summary>
         ///<var name="stateType">A GameStateType used to define what game state that should be switched to</var>
         ///<returns>void</returns>
@@ -29,6 +30,7 @@ namespace SpaceTaxi_1.StateMachine {
                     break;
              }
         } 
+
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent)
         {
             if (eventType == GameEventType.GameStateEvent) {
@@ -68,6 +70,5 @@ namespace SpaceTaxi_1.StateMachine {
                 this.ActiveState.HandleKeyEvent(gameEvent.Message, gameEvent.Parameter1);
             }
         }
-        
     }
 }

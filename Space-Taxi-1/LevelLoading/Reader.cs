@@ -20,6 +20,7 @@ namespace SpaceTaxi_1.LevelLoading {
             this.LegendData = new List<string>();
             this.CustomerData = new List<string>();
         }
+        
         ///<summary> first creates it two int objetcs. 
         /// then it get each line of file as an entry in array lines. <summary/>
         ///<var name="filename">A variable used to find out which of the two levels are to be loaded </var>
@@ -60,6 +61,7 @@ namespace SpaceTaxi_1.LevelLoading {
                 this.CustomerData.Add(lines[i]);
             }
         }
+
         ///<summary>Deletes all data related to the reader, such that a new level can be read without having to close and open the whole program</summary>
         ///<returns>void</returns>
         public void EmptyData() {
