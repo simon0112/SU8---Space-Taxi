@@ -1,14 +1,9 @@
 using DIKUArcade.State;
 using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using System.IO;
 using DIKUArcade.EventBus;
 using System;
-using DIKUArcade;
-using DIKUArcade.Timers;
 using System.Collections.Generic;
-using DIKUArcade.Physics;
 using SpaceTaxi_1.Entities;
 using SpaceTaxi_1.LevelLoading;
 
@@ -25,7 +20,7 @@ namespace SpaceTaxi_1.StateMachine {
         private List<Customer> CustomerHasBeenPickedUp;
         public int customerStartTimer;
         public int customerTimer;
-        private Score pointText;
+        private Utilities.Score pointText;
 
         public static GameRunning GetInstance() {
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
@@ -50,7 +45,7 @@ namespace SpaceTaxi_1.StateMachine {
             customerStartTimer = 0;
 
             customerTimer = 0;
-            pointText = new Score(new Vec2F(0.8f, -0.15f), new Vec2F(0.3f, 0.3f));
+            pointText = new Utilities.Score(new Vec2F(0.8f, -0.15f), new Vec2F(0.3f, 0.3f));
         }
 
         ///<summary>Used to find out if the game has ended</summary>

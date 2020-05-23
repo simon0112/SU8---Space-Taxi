@@ -1,6 +1,5 @@
 using DIKUArcade.EventBus;
 using DIKUArcade.State;
-using System;
 
 namespace SpaceTaxi_1.StateMachine {
     public class StateMachine : IGameEventProcessor<object> {
@@ -53,7 +52,8 @@ namespace SpaceTaxi_1.StateMachine {
                                 GameRunning.GetInstance().customerStartTimer = 0;
                                 GameRunning.GetInstance().resetGameOver();
                             } else if (GameRunning.GetInstance().ReturnLevel() != null) {
-                                GameRunning.GetInstance().ReturnLevelCreator().EmptyData(GameRunning.GetInstance().ReturnLevel().ReturnPlayer().customerOnBoard);
+                                var taxiCustomer = GameRunning.GetInstance().ReturnLevel().ReturnPlayer().customerOnBoard;
+                                GameRunning.GetInstance().ReturnLevelCreator().EmptyData(taxiCustomer);
                                 GameRunning.GetInstance().ReturnLevel().EmptyData();
                                 GameRunning.GetInstance().customerStartTimer = 0;
                                 GameRunning.GetInstance().resetGameOver();

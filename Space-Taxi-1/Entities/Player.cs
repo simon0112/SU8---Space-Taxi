@@ -60,7 +60,7 @@ namespace SpaceTaxi_1.Entities {
         ///<var name="moveDir">The direction the player is set to move in</var>
         ///<returns>void</returns>
         private void PhysicsEffect() {
-            physics.PhysicsEffect(entity, this.moveDir);
+            physics.PhysicsEffect(entity, moveDir);
         }
         
         ///<summary>Adds a customer to the taxa, such that the taxa 'carries' a customer</summary>
