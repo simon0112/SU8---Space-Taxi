@@ -43,19 +43,15 @@ namespace SpaceTaxi_1.LevelLoading {
         public void RenderLevelObjects() {
             // all rendering here
             obstacles.RenderEntities();
-<<<<<<< HEAD
+
 
             Player.entity.RenderEntity();
 
-            platforms.RenderEntities();
+            //platforms.RenderEntities();
             portal.RenderEntities();
             Player.entity.RenderEntity();
 
-            platforms.RenderEntities();
-            portal.RenderEntities();
-            Player.entity.RenderEntity();
 
-=======
             foreach (Platform plat in platforms) {
                 plat.entity.RenderEntity();
             }
@@ -66,7 +62,7 @@ namespace SpaceTaxi_1.LevelLoading {
                     cust.entity.RenderEntity();
                 }
             }
->>>>>>> 4f4f5d4e790fdc4810c530d49c3e8837f0cdd180
+
         }
 
         ///<summary>  adds an obstacle to the collective data of the level <summary/>
