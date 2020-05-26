@@ -4,11 +4,6 @@ namespace SpaceTaxi_1.Utilities {
     public static class EventBus {
         private static GameEventBus<object> eventBus;
 
-        /// <summary>
-        /// Gets the event bus if there is one otherwise it creates a new event bus.
-        /// </summary>
-        /// <returns>Event bus.</returns>
-
         ///<summary> returns a new  GameEventBus<object>() instance <summary/>
         ///<return> GameEventBus<object> object </returns> 
         public static GameEventBus<object> GetBus() {

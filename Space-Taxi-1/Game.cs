@@ -8,8 +8,6 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Timers;
 using SpaceTaxi_1.Utilities;
-using SpaceTaxi_1.LevelLoading;
-using SpaceTaxi_1.StateMachine;
 
 namespace SpaceTaxi_1 {
     public class Game : IGameEventProcessor<object> {
@@ -69,8 +67,8 @@ namespace SpaceTaxi_1 {
             eventBus.Subscribe(GameEventType.GameStateEvent, this);
             eventBus.Subscribe(GameEventType.TimedEvent, this);
             eventBus.Subscribe(GameEventType.MovementEvent, this);
-
         }
+
         ///<summary>The main Game loop, used to render, and process events in an orderly fashion</summary>
         ///<returns> void </returns>
         public void GameLoop() {
@@ -107,12 +105,7 @@ namespace SpaceTaxi_1 {
                 break;
             }
         }
-        ///<summary> register the events if one of the keys is released. <summary/>
-        ///<variable name="key"> the key that is released </variable>
-        ///<return> void, but like KeyPress, pushes an event to the eventBus </insput> 
-        public void KeyRelease(string key) {
-            
-        }
+
         ///<summary> The first processEvent, it takes the regular keypresses given by the eventBus and uses helper methods to send the event onwards <summary/>
         ///<variable name="eventType"> The event type that is related to the specific game event in the eventBus</variable>
         ///<variable name="gameEvent"> The game event itself </variable>

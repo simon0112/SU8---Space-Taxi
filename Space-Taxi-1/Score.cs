@@ -26,6 +26,8 @@ public class Score
    {
       score += PointWorth;
    }
+   ///<summary> renders the 'score-board' on screen</summary>
+   ///<returns> void </returns>
    public void RenderScore() 
    {
       display.SetText(string.Format("Score: {0}", score.ToString()));

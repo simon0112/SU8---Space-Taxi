@@ -24,6 +24,7 @@ namespace SpaceTaxi_1.Entities {
             Name = name;
             SpawnTime = spwnTme;
             startPlatform = start;
+            
             if (end.Contains('^') && end.Length > 1) {
                 goalPlatform = end.Substring(1);
             } else if (end.Contains('^') && end.Length == 1) {

@@ -9,7 +9,7 @@ using SpaceTaxi_1.Utilities;
 
 
 namespace SpaceTaxi_1.Entities {
-    public class Platform : IGameEventProcessor<object> {
+    public class Platform {
         public string Name;
         
         public Entity entity { get; private set; }
@@ -17,9 +17,6 @@ namespace SpaceTaxi_1.Entities {
         public Platform(string name, StationaryShape shape, Image img) {
             Name = name;
             entity = new Entity(shape, img);
-        }
-
-        public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
         }
     }
 }

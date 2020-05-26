@@ -1,6 +1,5 @@
 using DIKUArcade.EventBus;
 using DIKUArcade.State;
-using System;
 
 namespace SpaceTaxi_1.StateMachine {
     public class StateMachine : IGameEventProcessor<object> {
@@ -10,6 +9,7 @@ namespace SpaceTaxi_1.StateMachine {
             Utilities.EventBus.GetBus().Subscribe(GameEventType.InputEvent, this);
             ActiveState = MainMenu.GetInstance();
         }
+
         ///<summary>Switches state depending on which stateType it is fed</summary>
         ///<var name="stateType">A GameStateType used to define what game state that should be switched to</var>
         ///<returns>void</returns>
@@ -29,6 +29,7 @@ namespace SpaceTaxi_1.StateMachine {
                     break;
              }
         } 
+
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent)
         {
             if (eventType == GameEventType.GameStateEvent) {
@@ -51,7 +52,8 @@ namespace SpaceTaxi_1.StateMachine {
                                 GameRunning.GetInstance().customerStartTimer = 0;
                                 GameRunning.GetInstance().resetGameOver();
                             } else if (GameRunning.GetInstance().ReturnLevel() != null) {
-                                GameRunning.GetInstance().ReturnLevelCreator().EmptyData(GameRunning.GetInstance().ReturnLevel().ReturnPlayer().customerOnBoard);
+                                var taxiCustomer = GameRunning.GetInstance().ReturnLevel().ReturnPlayer().customerOnBoard;
+                                GameRunning.GetInstance().ReturnLevelCreator().EmptyData(taxiCustomer);
                                 GameRunning.GetInstance().ReturnLevel().EmptyData();
                                 GameRunning.GetInstance().customerStartTimer = 0;
                                 GameRunning.GetInstance().resetGameOver();
@@ -68,6 +70,5 @@ namespace SpaceTaxi_1.StateMachine {
                 this.ActiveState.HandleKeyEvent(gameEvent.Message, gameEvent.Parameter1);
             }
         }
-        
     }
 }
