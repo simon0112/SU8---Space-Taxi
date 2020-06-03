@@ -92,27 +92,20 @@ namespace SpaceTaxi_1.StateMachine {
         private void DetectCollision() {
             var playerShape = level.ReturnPlayer().entity.Shape.AsDynamicShape();
             foreach (Entity ent in level.portal) {
-                if (level.ReturnPlayer().customerOnBoard == null)
-                {
-                    NextLevelCall();
-                }
-                else 
-                {
-                    if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision)
-                    {
+                if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision) {
+                    if (level.ReturnPlayer().customerOnBoard != null) {
                         if (level.ReturnPlayer().customerOnBoard.goalPlatform == "Portal"
-                        && level.ReturnPlayer().customerOnBoard.TimeLimit > (customerTimer / 60))
-                        {
+                        && level.ReturnPlayer().customerOnBoard.TimeLimit > (customerTimer / 60)) {
                             //checks on collision with a portal, if the customer has the goal-platform of "Portal"
                             //or in other words, it is the last customer in this implementation of the game.
                             pointText.AddPoint(level.ReturnPlayer().customerOnBoard.pointWorth);
                             level.ReturnPlayer().customerOnBoard = null;
-                        }
-                        else
-                        {
+                        } else {
                             //if it isn't, then the player will go to the next level without issue.
                             NextLevelCall();
                         }
+                    } else {
+                        NextLevelCall();
                     }
                 }
             }
