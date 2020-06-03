@@ -11,7 +11,7 @@ namespace SpaceTaxi_1.StateMachine {
         }
 
         ///<summary>Switches state depending on which stateType it is fed</summary>
-        ///<var name="stateType">A GameStateType used to define what game state that should be switched to</var>
+        ///<var name="stateType">A GameStateType used. to define what game state that should be switched to</var>
         ///<returns>void</returns>
         public void SwitchState(GameStateType stateType) {
              switch (stateType) {

@@ -21,10 +21,11 @@ namespace SpaceTaxi_1.StateMachine {
 
         }
 
-        ///<summary>Initializes the 'Main-Menu' state of the game</summary>
+        ///<summary>Initializes the 'Main-Menu state of the game</summary>
         ///<returns> void </returns>
         public void InitializeGameState() {
-            menuButtons = new Text[2] {new Text("- New Game", new Vec2F(0.35f,0.5f), new Vec2F(0.5f,0.4f)), new Text("- Quit", new Vec2F(0.35f,0.0f), new Vec2F(0.5f,0.4f))};
+            menuButtons = new Text[2] {new Text("- New Game", new Vec2F(0.35f,0.5f),
+                new Vec2F(0.5f,0.4f)), new Text("- Quit", new Vec2F(0.35f,0.0f), new Vec2F(0.5f,0.4f))};
 
             BackgroundImage = new Entity(
             new DynamicShape(new Vec2F(0f, 0f), new Vec2F(1f, 1f)),

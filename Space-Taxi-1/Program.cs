@@ -1,7 +1,4 @@
-﻿using System;
-using SpaceTaxi_1.LevelLoading;
-
-namespace SpaceTaxi_1 {
+﻿namespace SpaceTaxi_1 {
     internal class Program {
         public static void Main(string[] args) {
             var game = new Game();

@@ -23,7 +23,7 @@ namespace SpaceTaxi_1.Entities {
 
         ///<summary> player constructor <summary/>
         ///<variable name="shape"> The Dynamic shape that the player is, the players placement and bounds</variable>
-        ///<variable name="entity"> The entity that the player is, makes use of the shape, and an image path to create a visible player </variable>
+        ///<variable name="entity"> The entity that. the player is, makes use of the shape, and an image path to create a visible player </variable>
         ///<variable name="Orientation"> The orientation of the player, can either be left or rigtht</variable>
         ///<returns> void, but instantiates the player object </returns> 
         public Player(DynamicShape shape, Customer cust) {
@@ -74,8 +74,8 @@ namespace SpaceTaxi_1.Entities {
         /// the screen space. So the player stops moving if it reach one of the sides. </summary>
         ///<input> none </input>
         ///<return> void </returns> 
-        public void Move()
-        {
+        public void Move() { 
+        
             if (entity.Shape.Position.X > 0f && entity.Shape.Position.X < 0.97f)
             {
                 entity.Shape.Move();

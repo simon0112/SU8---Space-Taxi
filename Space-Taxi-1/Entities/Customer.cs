@@ -1,11 +1,6 @@
-using DIKUArcade.EventBus;
 using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
-using DIKUArcade.Math;
 using System.IO;
-using SpaceTaxi_1.Enums;
-using System.Collections.Generic;
-using SpaceTaxi_1.Utilities;
+
 
 
 namespace SpaceTaxi_1.Entities {
@@ -20,7 +15,16 @@ namespace SpaceTaxi_1.Entities {
         public int pointWorth { get; private set; }
         public bool visible;
 
-        public Customer(string name, int spwnTme, string start, string end, int Limit, int worth, StationaryShape shape) {
+        ///<summary> Customer constructor <summary/>
+        ///<variable name="name"> name of the customer</variable>
+        ///<variable name="spawnTime">amount of seconds before spawning </variable>
+        ///<variable name="a letter</variable>
+        //////<variable name="end"> a letter </variable>
+        ///<variable name="limit"> limit amount </variable>
+        ///<variable name="worth"> worth amount. </variable>
+        ///<returns> customer object </returns> 
+        public Customer(string name, int spwnTme, string start,
+            string end, int Limit, int worth, StationaryShape shape) {
             Name = name;
             SpawnTime = spwnTme;
             startPlatform = start;
@@ -37,7 +41,8 @@ namespace SpaceTaxi_1.Entities {
 
             TimeLimit = Limit;
             pointWorth = worth;
-            entity = new Entity(shape, new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "CustomerStandRight.png")));
+            entity = new Entity(shape, new DIKUArcade.Graphics.Image
+                (Path.Combine("Assets", "Images", "CustomerStandRight.png")));
         }
     }
 }

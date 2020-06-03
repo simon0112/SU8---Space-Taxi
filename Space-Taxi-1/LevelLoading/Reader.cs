@@ -1,7 +1,6 @@
 using System.IO;
 using System.Collections.Generic;
 using SpaceTaxi_1.Utilities;
-using System;
 
 namespace SpaceTaxi_1.LevelLoading {
     public class Reader {
@@ -12,7 +11,7 @@ namespace SpaceTaxi_1.LevelLoading {
         public List<string> LegendData {get; private set;}
         public List<string> CustomerData {get; private set;}
 
-        // constructor of the reader class.
+        // constructor of the reader class
         // its being sets when the class is called.
         public Reader() {
             this.MapData = new List<string>();
@@ -52,17 +51,21 @@ namespace SpaceTaxi_1.LevelLoading {
                     linePointer++;
                 }
             }
-            // Since it is assumed that meta data and level data line amount is constant, the start of the legend data can be assumed to be constant
+            // Since it is assumed that meta data and level data line amount is constant,
+            //the start of the legend data can be assumed to be constant
             for (int i = 27; i <= CustomerDataStart-2; i++) {
                 this.LegendData.Add(lines[i]);
             }
-            // Customer data is assumed to be the last data found within the level text file, as such, the last lines in the array after the found point where customer data starts, is added to the customer data list.
+            // Customer data is assumed to be the last data found within the level text
+            //file, as such, the last lines in the array after the found point
+            //where customer data starts, is added to the customer data list.
             for (int i = CustomerDataStart; i < lines.Length; i++) {
                 this.CustomerData.Add(lines[i]);
             }
         }
 
-        ///<summary>Deletes all data related to the reader, such that a new level can be read without having to close and open the whole program</summary>
+        ///<summary>Deletes all data related to the reader, such that a new level
+        ///can be read without having to close and open the whole program</summary>
         ///<returns>void</returns>
         public void EmptyData() {
             this.CustomerData.RemoveRange(0, CustomerData.Count);

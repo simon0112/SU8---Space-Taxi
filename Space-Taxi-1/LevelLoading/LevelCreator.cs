@@ -13,14 +13,18 @@ namespace SpaceTaxi_1.LevelLoading {
         private Customer PrevLvlCustomer;
 
         ///<summary> the instantiator of the LevelCreator object</summary>
-        ///<variable name="reader"> the reader that reads the files that save how the levels look</variable>
-        ///<variable name="LegendIndexFinder"> A list used to determine which character in the map data has what index in the legend data</variable>
+        ///<variable name="reader"> the reader that reads the files that
+        ///save how the levels look</variable>
+        ///<variable name="LegendIndexFinder"> A list used to determine
+        ///which character in the map, data has what index in the legend data</variable>
         ///<returns> </returns>
         public LevelCreator() {
             reader = new Reader();
             LegendIndexFinder = new List<string>();
         }
-        ///<summary>Deletes all data related to the levelcreator, such that a new one can be created without having to close and open the whole program</summary>
+        ///<summary>Deletes all data related to the levelcreator,
+        ///such that a new one can be created without having to
+        ///close and open the whole program</summary>
         ///<returns>void</returns>
         public void EmptyData(Customer cust) {
             reader.EmptyData();
@@ -32,8 +36,10 @@ namespace SpaceTaxi_1.LevelLoading {
             }
         }
         
-        ///<summary> Creates and instantiates the level object, also adds obstacles and the player to the level<summary/>
-        ///<variable name="levelname"> levelname is the name of the level that is to be created, used to find the right file</variable>
+        ///<summary> Creates and instantiates the level object, also adds
+        ///obstacles and the player to the level<summary/>
+        ///<variable name="levelname"> levelname is the name of the
+        ///level that is to be created, used to find the right file</variable>
         ///<variable name="level"> the level itself</variable>
         ///<returns> The level that has been filled with obstacles and the player</returns> 
         public Level CreateLevel(string levelname) {
@@ -66,7 +72,8 @@ namespace SpaceTaxi_1.LevelLoading {
                         //if it isn't a player-character, then it checks that the character reached isn't a " "
                         //after this it checks which character is read, and does different things depending.
                         if (reader.MapData[(int) y].Substring((int) x, 1) != "^") {
-                            //As long as it isn't the character denoting a portal, the character is searched for in the LegendIndexFinder
+                            //As long as it isn't the character denoting a portal,
+                            //the character is searched for in the LegendIndexFinder
                             //and the equivalent image-name is also found
                             ImageIndex = LegendIndexFinder.IndexOf(reader.MapData[(int) y].Substring((int) x, 1));
                             ImageName = reader.LegendData[ImageIndex].Substring(3);
@@ -87,15 +94,26 @@ namespace SpaceTaxi_1.LevelLoading {
 
                                     var tempcustomer = str.Split(' ');
 
-                                    level.AddCustomer(new Customer(tempcustomer[1], int.Parse(tempcustomer[2]), tempcustomer[3], tempcustomer[4], int.Parse(tempcustomer[5]), int.Parse(tempcustomer[6]), new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),(((y-1)/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), reader.MapData[(int) y].Substring((int) x, 1));
+                                    level.AddCustomer(new Customer(tempcustomer[1], int.Parse(tempcustomer[2]),
+                                        tempcustomer[3], tempcustomer[4], int.Parse(tempcustomer[5]), int.Parse(tempcustomer[6]),
+                                        new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),(((y-1)/-(float)
+                                        reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float)
+                                        reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))),
+                                        reader.MapData[(int) y].Substring((int) x, 1));
                                 }
                             }
                         } else if (reader.MapData[(int) y].Substring((int) x, 1) == "^") {
                             //adds a portal to the correct list of data if the corresponding character is reached.
-                            level.AddPortal((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "aspargus-passage1.png")));
+                            level.AddPortal((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),
+                                ((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float)
+                                reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))),
+                                new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", "aspargus-passage1.png")));
                         } else {
                             //Lastly adds any object that isn't a platform, space, or portal to the list of obstacles.
-                            level.AddObstacle((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))), new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
+                            level.AddObstacle((new DIKUArcade.Entities.StationaryShape((x/reader.MapData[(int) y].Length),
+                                ((y/-(float) reader.MapData.Count)+(1-((float) 1/(float) reader.MapData.Count))),
+                                ((float) 1/(float) reader.MapData[(int) y].Length),((float) 1/(float) reader.MapData.Count))),
+                                new DIKUArcade.Graphics.Image(Path.Combine("Assets", "Images", ImageName)));
                         }
                     }
                 }

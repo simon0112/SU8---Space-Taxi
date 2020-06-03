@@ -32,7 +32,7 @@ namespace SpaceTaxi_1.StateMachine {
 
         }
 
-        ///<summary>Initializes the 'running' state of the game</summary>
+        ///<summary>Initializes the 'running' state. of the game</summary>
         ///<returns> void </returns>
         public void InitializeGameState() {
             levelCreator = new LevelCreator();
@@ -49,14 +49,17 @@ namespace SpaceTaxi_1.StateMachine {
         }
 
         ///<summary>Used to find out if the game has ended</summary>
-        ///<var name="GameOverActive">The variable later checked to determine if the game is over, boolean.</var>
+        ///<var name="GameOverActive">The variable later checked to
+        ///determine if the game is over, boolean.</var>
         ///<returns>void</returns>
         public void GameOver() {
             GameOverActive = true;
         }
 
-        ///<summary>Resets the flag for if the game is over, such that a new game can be started without closing and opening the program</summary>
-        ///<var name="GameOverActive">The variable later checked to determine if the game is over, boolean.</var>
+        ///<summary>Resets the flag for if the game is over, such that
+        ///a new game can be started without closing and opening the program</summary>
+        ///<var name="GameOverActive">The variable later checked
+        ///to determine if the game is over, boolean.</var>
         ///<returns>void</returns>
         public void resetGameOver() {
             GameOverActive = false;
@@ -81,25 +84,39 @@ namespace SpaceTaxi_1.StateMachine {
         ///<summary>Detects collision between entities and the player</summary>
         ///<var name="playerShape">the dynamic shape that is the player</var>
         ///<var name="ent">the specific shape in the given list of entities</var>
-        ///<var name="PlayerSpeedCheck">a boolean value denoting whether the the player is within the speed requirements needed to land</var>
-        ///<var name="obstacleColl">a boolean value denoting whether the the player has collided with an obstacle</var>
+        ///<var name="PlayerSpeedCheck">a boolean value denoting whether the the player
+        ///is within the speed requirements needed to land</var>
+        ///<var name="obstacleColl">a boolean value denoting whether the the player
+        ///has collided with an obstacle</var>
         ///<returns>void</returns>
         private void DetectCollision() {
             var playerShape = level.ReturnPlayer().entity.Shape.AsDynamicShape();
             foreach (Entity ent in level.portal) {
-                if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision) {
-                    if (level.ReturnPlayer().customerOnBoard.goalPlatform == "Portal"
-                    && level.ReturnPlayer().customerOnBoard.TimeLimit > (customerTimer/60)) {
-                        //checks on collision with a portal, if the customer has the goal-platform of "Portal"
-                        //or in other words, it is the last customer in this implementation of the game.
-                        pointText.AddPoint(level.ReturnPlayer().customerOnBoard.pointWorth);
-                        level.ReturnPlayer().customerOnBoard = null;
-                    } else {
-                        //if it isn't, then the player will go to the next level without issue.
-                        NextLevelCall();
-                    }    
+                if (level.ReturnPlayer().customerOnBoard == null)
+                {
+                    NextLevelCall();
+                }
+                else 
+                {
+                    if (DIKUArcade.Physics.CollisionDetection.Aabb(playerShape, ent.Shape).Collision)
+                    {
+                        if (level.ReturnPlayer().customerOnBoard.goalPlatform == "Portal"
+                        && level.ReturnPlayer().customerOnBoard.TimeLimit > (customerTimer / 60))
+                        {
+                            //checks on collision with a portal, if the customer has the goal-platform of "Portal"
+                            //or in other words, it is the last customer in this implementation of the game.
+                            pointText.AddPoint(level.ReturnPlayer().customerOnBoard.pointWorth);
+                            level.ReturnPlayer().customerOnBoard = null;
+                        }
+                        else
+                        {
+                            //if it isn't, then the player will go to the next level without issue.
+                            NextLevelCall();
+                        }
+                    }
                 }
             }
+
             foreach (Platform plat in level.platforms) {
                 bool PlayerSpeedCheck = playerShape.Direction.Y >= -0.001f 
                 && (playerShape.Direction.X <= 0.001f
@@ -186,8 +203,10 @@ namespace SpaceTaxi_1.StateMachine {
                     "", ""));
         }
 
-        ///<summary> Used to find out if the level has been going on for enough time for the customer to become visible,
-        /// also checks if a customer already has been picked up once, to make sure multiples of the same customer doesn't appear when a customer</summary>
+        ///<summary> Used to find out if the level has been going on for enough
+        ///time for the customer to become visible,
+        /// also checks if a customer already has been picked up once,
+        /// to make sure multiples of the same customer doesn't appear when a customer</summary>
         ///<returns>void</returns>
         public void CustomerAppear() {
             foreach (Customer cust in level.Customers) {
@@ -199,7 +218,8 @@ namespace SpaceTaxi_1.StateMachine {
             }
         }
 
-        ///<summary> Used to find out if the customer on the taxi has 'run out of patience' if it has, then a game-over happens</summary>
+        ///<summary> Used to find out if the customer on the taxi
+        ///has 'run out of patience' if it has, then a game-over happens</summary>
         ///<returns>void</returns>
         public void customerPatienceLeft() {
             if ((customerTimer/60) >= level.ReturnPlayer().customerOnBoard.TimeLimit) {
@@ -289,7 +309,8 @@ namespace SpaceTaxi_1.StateMachine {
             pointText.RenderScore();
         }
 
-        ///<summary>Used to create the level when the level is supposed to start, also subscribes the palyer to the eventbus</summary>
+        ///<summary>Used to create the level when the level is supposed to start,
+        ///also subscribes the palyer to the eventbus</summary>
         ///<var name="level">the level that is created by the levelcreator</var>
         ///<returns>void</returns>
         public void CreateLevel(string lvlName) {

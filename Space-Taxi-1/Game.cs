@@ -93,7 +93,8 @@ namespace SpaceTaxi_1 {
 
         ///<summary> register the events if one of the casses is called. <summary/>
         ///<variable name="key"> The key that is pressed</variable>
-        ///<returns> void, but pushes an event to the eventBus such that every other instance can process it</returns> 
+        ///<returns> void, but pushes an event to the eventBus
+        ///such that every other instance can process it</returns> 
         public void KeyPress(string key) {
             switch (key) {
             case "KEY_ESCAPE":
@@ -106,8 +107,10 @@ namespace SpaceTaxi_1 {
             }
         }
 
-        ///<summary> The first processEvent, it takes the regular keypresses given by the eventBus and uses helper methods to send the event onwards <summary/>
-        ///<variable name="eventType"> The event type that is related to the specific game event in the eventBus</variable>
+        ///<summary> The first processEvent, it takes the regular keypresses given by the
+        ///eventBus and uses helper methods to send the event onwards <summary/>
+        ///<variable name="eventType"> The event type that is related to the specific
+        ///game event in the eventBus</variable>
         ///<variable name="gameEvent"> The game event itself </variable>
         ///<return> void, but runs functions depending on what the event consists of </returns> 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
