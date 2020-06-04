@@ -19,7 +19,7 @@ namespace SpaceTaxi_1 {
 
 
         ///<summary> the game class constructor. <summary/>
-        ///<variable name="LvlName"> the name of the level that is to be loaded.</variable>
+        ///<variable name="LvlName"> the name of the level that is to be loaded</variable>
         ///<variable name="win"> The window that the game will be displayed in.</variable>
         ///<variable name="eventBus"> The eventBus that will load every event in an orderly manner.</variable>
         ///<variable name="gameTimer"> The game timer, used to update various information in the window every interval of time.</variable>
@@ -36,7 +36,7 @@ namespace SpaceTaxi_1 {
             eventBus.InitializeEventBus(new List<GameEventType> {
                 GameEventType.InputEvent, // key press / key release
                 GameEventType.WindowEvent, // messages to the window, e.g. CloseWindow()
-                GameEventType.PlayerEvent, // commands issued to the player object, e.g. move,
+                GameEventType.PlayerEvent, // commands issued to the player object, e.g. move
                 GameEventType.GameStateEvent,
                 GameEventType.TimedEvent,
                 GameEventType.MovementEvent,
